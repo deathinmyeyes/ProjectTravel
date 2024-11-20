@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/style.css">
+    <title>TRAVEL.guide</title>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header__wrapper">
+                <div class="header__logo">
+                    <img src="./img/logo.svg" alt="logo">
+                    <h2>TRAVEL.guide</h2>
+                </div>
+                <div class="header__nav">
+                    <ul class="header__list">
+                        <li><a href="./index.html">Домой</a></li>
+                        <li><a href="./routes.html">Интересное</a></li>
+                        <li><a href="./contacts.html">Контакты</a></li>
+                    </ul>
+                </div>
+                <div class="header__button">
+                    <a href="./login.html">Login</a>
+                </div>
+                <div class="header__burger-block">
+                    <button class="header__burger" id="openBurger"><img src="./img/hamburger.svg" alt="svg"></button>
+                    <button class="header__burger-back" id="closeBurger">×</button>
+                </div>
+            </div>
+            <hr color="#ABABAB">
+        </div>
+    </header>
+    <burger class="burger" id="burger">
+        <div class="container">
+            <div class="burger__wrapper">
+                <div class="burger__autorization">
+                    <a href="./login.html" class="burger__login">Login</a>
+                    <p>or</p>
+                    <a href="./register.html" class="burger__register">REGISTER</a>
+                </div>
+                <hr class="burger__hr" color="#ABABAB">
+                <ul class="burger__menu">
+                    <li><a href="./index.html">Домой</a></li>
+                    <li><a href="./routes.html">Интересное</a></li>
+                    <li><a href="./contacts.html">Контакты</a></li>
+                </ul>
+            </div>
+        </div>
+    </burger>
+    <section class="main">
+        <div class="container">
+            <div class="main__wrapper">
+                <div class="main__title-text">
+                    <h1>TRAVEL.guide</h1>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero cupiditate officiis quidem rem omnis reiciendis, vel saepe. Minus quam odio, soluta eum saepe debitis sint nostrum reiciendis, illum provident vel!</p>
+                </div>
+
+                <div class="main__slider-wrapper">
+                    <div class="main__slider">
+                        <img src="./img/main__slider1.png" alt="img">
+                        <img src="./img/main__slider2.png" alt="img">
+                        <img src="./img/main__slider3.png" alt="img">
+                        <img src="./img/main__slider4.png" alt="img">
+                      </div>
+                        <button class="main__prev-button" aria-label="Посмотреть предыдущий слайд">&lt;</button>
+                        <button class="main__next-button" aria-label="Посмотреть следующий слайд">&gt</button>
+                    </div>
+                </div>
+                <div class="main__card-block">
+                    <div class="main__card-1">
+                        <div class="main__card-1_text">
+                            <h2>Городской парк "Звездный"</h2>
+                            <p>Оазис зелени и спокойствия в центре города, где можно отдохнуть от городской суеты, прогуляться по ухоженным аллеям, посмотреть научно-популярные выставки и поучаствовать в экскурсиях по звездному небу.</p>
+                            <button id="openModal1">Узнать подробнее</button>
+                        </div>
+                        <img src="./img/card1.png" alt="img">
+                    </div>
+                    <div class="main__card-2">
+                        <img src="./img/card2.png" alt="img">
+                        <div class="main__card-2_text">
+                            <h2>Выставочный центр "Метеорит"</h2>
+                            <p>Уникальное место, посвященное метеориту, упавшему на территорию Челябинска в 2013 году. Здесь можно узнать об истории столкновения, посмотреть экспозиции и узнать об интересных фактах.</p>
+                            <button id="openModal2">Узнать подробнее</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="main__map">
+                    <h1>Карта</h1>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d12893.422052760465!2d61.431540714476974!3d55.16128767821281!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sru!2sru!4v1728648340735!5m2!1sru!2sru" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+            <div class="main__modals">
+                <div class="main__window-1" id="modal1">
+                    <div class="main__modal1" id="modal1">
+                        <div class="main__modal-more">
+                            <img src="./img/card-modal1-1.png" alt="img">
+                            <p>Городской парк "Звездный" - это уютное место для отдыха и релаксации среди природы. Парк насчитывает большое количество зеленых насаждений, цветочных клумб и живописных аллей для прогулок. Здесь также можно найти детские площадки, спортивные площадки и столики для пикника, чтобы провести время семьей или друзьями. В парке также проводятся различные мероприятия и фестивали, такие как концерты под открытым небом и выставки современного искусства.</p>
+                        </div>
+                    </div>
+                    <button class="main__back" id="close1"><img class="main__modal-back" src="./img/red-back_button.svg" alt="back"></button>
+                </div>
+                <div class="main__window-2" id="modal2">
+                    <div class="main__modal2" id="modal2">
+                        <div class="main__modal-more">
+                            <img src="./img/card-modal2-1.png" alt="img">
+                            <p>Выставочный центр "Метеорит" - это уникальное место для знакомства с историей Челябинска и изучения метеоритов, которые упали на эту территорию. Здесь посетители могут увидеть редкие экспонаты, такие как обломки метеоритов, фотографии с места падения и интерактивные дисплеи, которые рассказывают об их происхождении. Выставочный центр также проводит лекции и мастер-классы для всех возрастов, чтобы расширить знания о космосе и астрономии.</p>
+                        </div>
+                    </div>
+                    <button class="main__back" id="close2"><img class="main__modal-back" src="./img/red-back_button.svg" alt="back"></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__wrapper">
+                <div class="footer__logo-wrapper">
+                    <div class="footer__logo">
+                        <img src="./img/logo.svg" alt="logo">
+                        <p>TRAVEL.guide</p>
+                    </div>
+                    <div class="footer__logo-text">
+                        <p>Мы специализируемся на туристических услугах и предлагаем уникальные путешествия по различным городам РФ. </p>
+                    </div>
+                </div>
+                <div class="footer__navigation">
+                    <div class="footer__service-list">
+                        <p>Сервис</p>
+                        <li>Консультация</li>
+                        <li>Поддержка</li>
+                        <li>Развитие</li>
+                    </div>
+                    <div class="footer__company-list">
+                        <p>Компания</p>
+                        <li>Услуги</li>
+                        <li>Особенности</li>
+                        <li>Блог</li>
+                        <li>Обратная связь</li>
+                    </div>
+                </div>
+            </div>
+            <hr color="#195581">
+            <div class="footer__copyright">
+                <p>Copyright <span>TRAVEL.guide</span></p>
+                <div class="footer__copyright-policy">
+                    <p>Terms of Service</p>
+                    <p>Privacy Policy</p>
+                    <p>Cookies</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
+<script src="./js/index.js"></script>
+<script src="./js/burger.js"></script>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/style.css">
+    <title>register</title>
+</head>
+<body>
+    <section class="register">
+        <div class="container">
+            <a href="./index.html"><img class="register__back" src="./img/reg_arrow.svg" alt="svg"></a>
+            <div class="register__text-block">
+                <div class="register__text">
+                    <h1 class="register__text-h1">Регистрация</h1>
+                    <p class="register__text-p">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam itaque sint adipisci? Hic minima non excepturi doloribus, repellat accusantium beatae incidunt quo suscipit, neque ut quibusdam optio! Ex, at repudiandae?</p>
+                </div>
+                <img src="./img/reg_png.png" alt="img">
+            </div>
+            <form id="registration" class="register__block">
+                <p class="register__welcome">Добро пожаловать </p>
+                <p class="register__autorization">Регистрация</p>
+                <p class="register__login-p">Есть аккаунт?</p>
+                <a class="register__login-a" href="./login.html">Авторизуйтесь</a>
+                <p class="register__email-p">Введите свой Email</p>
+                <input class="register__email-inp" type="email" id="email" placeholder="Email">
+                <p class="register__personal-p">Логин</p>
+                <input class="register__personal-inp" type="text" id="name" placeholder="Username">
+                <p class="register__password-p">Введите пароль</p>
+                <input class="register__password-inp" type="password" id="password" placeholder="Password">
+                <p class="register__confirm-password-p">Подтвердите пароль</p>
+                <input class="register__confirm-password-inp" type="password" id="repassword" placeholder="Confirm password">
+                <button class="register__button" type="submit" id="submit" name="submit">Зарегистрироваться</button> 
+            </form>
+        </div>
+    </section>
+    <script src="./js/register.js">
+    </script>
+</body>
+</html>

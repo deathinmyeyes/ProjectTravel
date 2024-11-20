@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/style.css">
+    <title>Routes</title>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header__wrapper">
+                <div class="header__logo">
+                    <img src="./img/logo.svg" alt="logo">
+                    <h2>TRAVEL.guide</h2>
+                </div>
+                <div class="header__nav">
+                    <ul class="header__list">
+                        <li><a href="./index.html">Домой</a></li>
+                        <li><a href="./routes.html">Интересное</a></li>
+                        <li><a href="./contacts.html">Контакты</a></li>
+                    </ul>
+                </div>
+                <div class="header__button">
+                    <a href="./login.html">Login</a>
+                </div>
+                <div class="header__burger-block">
+                    <button class="header__burger" id="openBurger"><img src="./img/hamburger.svg" alt="svg"></button>
+                    <button class="header__burger-back" id="closeBurger">×</button>
+                </div>
+            </div>
+            <hr color="#ABABAB">
+        </div>
+    </header>
+    <burger class="burger" id="burger">
+        <div class="container">
+            <div class="burger__wrapper">
+                <div class="burger__autorization">
+                    <a href="./login.html" class="burger__login">Login</a>
+                    <p>or</p>
+                    <a href="./register.html" class="burger__register">REGISTER</a>
+                </div>
+                <hr class="burger__hr" color="#ABABAB">
+                <ul class="burger__menu">
+                    <li><a href="./index.html">Домой</a></li>
+                    <li><a href="./routes.html">Интересное</a></li>
+                    <li><a href="./contacts.html">Контакты</a></li>
+                </ul>
+            </div>
+        </div>
+    </burger>
+    <section class="route">
+        <div class="route__search-bar">
+            <input type="text" id="input-text" placeholder="Search...">
+        </div>
+        <div class="container">
+            <div class="route__sorted">
+                <p>Сортировка по:</p>
+                <br>
+                <br>
+                <button id="btn-2">Доступности</button>
+                <button id="btn-1">Популярности</button>
+                <button id="btn-reset">Сбросить параметры</button>
+            </div>
+        </div>
+        <article class="route__card-wrapper" id="search-block">              
+                <div class="route__card" id="card">
+                    <img src="./img/route_img1.png" alt="img">
+                    <h2 id="card_name">Сказ об Урале</h2>
+                    <p>В «Сказе об Урале» много идет от поэтической сказочности Бажова, от былинного народного фольклора: великан, носящий огромный пояс с глубокими карманами, в которых он прячет все свои сокровища. Само слово «Урал» переводится с башкирского как пояс. И, несмотря, на былинно-эпическую трактовку образа, отчетливо видно, что скульптор показывает Урал не прошлого, а сегодняшний, Урал индустриальный</p>
+                    <a href="https://ru.wikipedia.org/wiki/Сказ_об_Урале">Подробнее</a>
+                </div>
+                <div class="route__card1" id="card">
+                    <img src="./img/route_img2.png" alt="img">
+                    <h2 id="card_name">Исторический музей</h2>
+                    <p>В музее имеются старинные фотографии, картины XVIII—XX веков, старые документы и редкие книги, предметы быта и одежда русских, кочевников и татаро-башкирских племён, художественное литьё, златоустовская гравюра, старинные монеты, минералогические коллекции, кости вымерших животных и чучела существующих. Хранящиеся здесь археологические находки, найденные на Южном Урале, датируются от эпохи энеолита до раннего средневековья</p>
+                    <a href="https://ru.wikipedia.org/wiki/Исторический_музей_Южного_Урала">Подробнее</a>
+                </div>
+                <div class="route__card2" id="card">
+                    <img src="./img/route_img3.png" alt="img">
+                    <h2 id="card_name">Академический театр</h2>
+                    <p>Строительство нового здания театра на площади Революции началось в 1973 году. Авторы проекта челябинские архитекторы Б. А. Баранов, В. Л. Глазырин, Д. О. Олтаржевский, Ю. П. Перчаткин, А. И. Рудик, Н. Н. Семейкин, А. Н. Слонимский. Автором идеи вписать объём в овал выступил архитектор Г. А. Ярцев. В 1941 году челябинские актёры уступили свою сцену эвакуированному на Урал Московскому Малому театру, а сами десять месяцев работали в Шадринске.</p>
+                    <a href="https://ru.wikipedia.org/wiki/Челябинский_академический_театр_драмы_имени_Наума_Орлова">Подробнее</a>
+                </div>
+                <div class="route__card3" id="card">
+                    <img src="./img/route_img4.png" alt="img">
+                    <h2 id="card_name">Кировка</h2>
+                    <p>В 2000 году мэр Челябинска В. Тарасов решил превратить улицу в культурный памятник, сделав её пешеходной. В дальнейшем на ней были размещены памятники согласно тематике зданий, возле которых стояли, различные бронзовые фигуры нищего, гитариста, городового (возле дома облисполкома), крестьянина у открытой книги (у здания Законодательного собрания), пожарной бочки с пожарным возле бывшей пожарной части.</p>
+                    <a href="https://ru.wikipedia.org/wiki/Кировка_(улица)">Подробнее</a>
+                </div>
+                <div class="route__pagination">
+                    <button id="btn1">1</button>
+                    <button id="btn2">2</button>
+                    <button id="btn3">3</button>
+                    <button id="btn4">4</button>
+                </div>
+        </article>
+    </section>
+    <footer class="footer-routes">
+        <div class="container"><div class="footer__wrapper">
+                <div class="footer__logo-wrapper">
+                    <div class="footer__logo">
+                        <img src="./img/logo.svg" alt="logo">
+                        <p>TRAVEL.guide</p>
+                    </div>
+                    <div class="footer__logo-text">
+                        <p>Мы специализируемся на туристических услугах и предлагаем уникальные путешествия по различным городам РФ. </p>
+                    </div>
+                </div>
+                <div class="footer__navigation">
+                    <div class="footer__service-list">
+                        <p>Сервис</p>
+                        <li>Консультация</li>
+                        <li>Поддержка</li>
+                        <li>Развитие</li>
+                    </div>
+                    <div class="footer__company-list">
+                        <p>Компания</p>
+                        <li>Услуги</li>
+                        <li>Особенности</li>
+                        <li>Блог</li>
+                        <li>Обратная связь</li>
+                    </div>
+                </div>
+            </div>
+            <hr color="#195581">
+            <div class="footer__copyright">
+                <p>Copyright <span>TRAVEL.guide</span></p>
+                <div class="footer__copyright-policy">
+                    <p>Terms of Service</p>
+                    <p>Privacy Policy</p>
+                    <p>Cookies</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
+<script src="./js/route.js"></script>
+<script src="./js/burger.js"></script>
+

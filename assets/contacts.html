@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" class="contacts_ht,l">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/style.css">
+    <title>Contacts</title>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header__wrapper">
+                <div class="header__logo">
+                    <img src="./img/logo.svg" alt="logo">
+                    <h2>TRAVEL.guide</h2>
+                </div>
+                <div class="header__nav">
+                    <ul class="header__list">
+                        <li><a href="./index.html">Домой</a></li>
+                        <li><a href="./routes.html">Интересное</a></li>
+                        <li><a href="./contacts.html">Контакты</a></li>
+                    </ul>
+                </div>
+                <div class="header__button">
+                    <a href="./login.html">Login</a>
+                </div>
+                <div class="header__burger-block">
+                    <button class="header__burger" id="openBurger"><img src="./img/hamburger.svg" alt="svg"></button>
+                    <button class="header__burger-back" id="closeBurger">×</button>
+                </div>
+            </div>
+            <hr color="#ABABAB">
+        </div>
+    </header>
+    <burger class="burger" id="burger">
+        <div class="container">
+            <div class="burger__wrapper">
+                <div class="burger__autorization">
+                    <a href="./login.html" class="burger__login">Login</a>
+                    <p>or</p>
+                    <a href="./register.html" class="burger__register">REGISTER</a>
+                </div>
+                <hr class="burger__hr" color="#ABABAB">
+                <ul class="burger__menu">
+                    <li><a href="./index.html">Домой</a></li>
+                    <li><a href="./routes.html">Интересное</a></li>
+                    <li><a href="./contacts.html">Контакты</a></li>
+                </ul>
+            </div>
+        </div>
+    </burger>
+    <section class="contacts">
+        <div class="container">
+            <div class="contacts__block">
+                <h1>Контакты</h1>
+                <div class="contacts__contact">
+                    <img src="./img/contacts_phone.svg" alt="svg">
+                    <p>8-800-555-35-35</p>
+                </div>
+                <div class="contacts__contact">
+                    <img src="./img/contacts_mail.svg" alt="svg">
+                    <p>TRAVEL.guide@contact.us</p>
+                </div>
+                <div class="contacts__contact">
+                    <img src="./img/contacts_location.svg" alt="svg">
+                    <p>Республика Татарстан, г. Елабуга, ул. Норд-Драйв 7А.</p>
+                </div>
+                <button class="contacts__call" id="openModal3">Обратная связь</button>
+                <div class="contacts__picture">
+                    <img src="./img/contacts_operators.png" alt="png" class="contacts__operators">
+                </div>
+            </div>
+            <div class="contacts__modals">
+                <div class="contacts__modal">
+                    <div class="contacts__modal3" id="modal3">
+                        <form class="contacts__modal-body" id="contact">
+                            <div class="contacts__modal-text">
+                                <button class="contacts__back" type="button" id="close3">×</button>
+                                <h1>Свяжитесь с нами</h1>
+                                <div class="contacts__modal-text-wrapper">
+                                    <div class="contacts__modal-name">
+                                        <p>Имя</p>
+                                        <input type="text" id="name" placeholder="First name">
+                                    </div>
+                                    <div class="contacts__modal-surname">
+                                        <p>Фамилия</p>
+                                        <input type="text" id="surname" placeholder="Last name">
+                                    </div>
+                                </div>
+                                <div class="contacts__modal-email">
+                                    <p>Почта</p>
+                                    <input type="email" id="email" placeholder="qwerty123@gmail.com">
+                                </div>
+                                <div class="contacts__modal-message">
+                                    <p>Почему хотите связаться с нами?</p>
+                                    <input type="text" id="message" placeholder="Type here your message">
+                                </div>
+                                <button class="contacts__modal-call" id="submit">Связаться</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer class="footer-contact">
+        <div class="container">
+            <div class="footer__wrapper">
+                <div class="footer__logo-wrapper">
+                    <div class="footer__logo">
+                        <img src="./img/logo.svg" alt="logo">
+                        <p>TRAVEL.guide</p>
+                    </div>
+                    <div class="footer__logo-text">
+                        <p>Мы специализируемся на туристических услугах и предлагаем уникальные путешествия по различным городам РФ. </p>
+                    </div>
+                </div>
+                <div class="footer__navigation">
+                    <div class="footer__service-list">
+                        <p>Сервис</p>
+                        <li>Консультация</li>
+                        <li>Поддержка</li>
+                        <li>Развитие</li>
+                    </div>
+                    <div class="footer__company-list">
+                        <p>Компания</p>
+                        <li>Услуги</li>
+                        <li>Особенности</li>
+                        <li>Блог</li>
+                        <li>Обратная связь</li>
+                    </div>
+                </div>
+            </div>
+            <hr color="#195581">
+            <div class="footer__copyright">
+                <p>Copyright <span>TRAVEL.guide</span></p>
+                <div class="footer__copyright-policy">
+                    <p>Terms of Service</p>
+                    <p>Privacy Policy</p>
+                    <p>Cookies</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
+<script src="./js/contacts.js"></script>
+<script src="./js/burger.js"></script>

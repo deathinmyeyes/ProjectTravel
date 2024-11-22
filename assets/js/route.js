@@ -6,7 +6,7 @@ const wrapper = document.getElementById('route_wrap'); //Создаем конс
 const header = document.getElementById('header'); //Создаем константу (неизменяемую переменную)
 const footer = document.getElementById('footer'); //Создаем константу (неизменяемую переменную)
 loader.id = 'loader'; //Элементу loader добавляем айди loader
-loader.innerHTML = "<img src='./25.gif' alt='img'></img>"; //Создаем html объект с элементом loader
+loader.innerHTML = "<img src='./img/25.gif', alt='loader'></img>"; //Создаем html объект с элементом loader
 dataContainer.appendChild(loader); //Добавляем loader в общий контейнер
 
 searchInput.style.display = 'none'; //Прописываем стили для элементов во время отображения loader'a

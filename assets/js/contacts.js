@@ -1,3 +1,14 @@
+document.getElementById('burger').addEventListener('click', function() { //Создаем событие по клику для элемента burger
+    const wrapper = document.querySelector('.header__wrapper'); //Создаем переменную с html элементом .header__wrapper
+    if (wrapper.classList.toggle('active')) {   //С помощью условия добавляем класс active элементу header__wrapper методом toggle
+    document.querySelector('.contacts__block').style.marginTop = '400px' //При открытом бургер меню - делаем отступ сверху 270px элементу route__input-wrapper
+    } else {
+      document.querySelector('.contacts__block').style.marginTop = '0px' //При закрытом бургер меню - делаем отступ сверху 0px элементу route__input-wrapper
+    }
+    });
+
+
+
 const modal3 = document.querySelector('#modal3');
 const btn3 = document.querySelector('#openModal3');
 const close3 = document.querySelector('#close3');

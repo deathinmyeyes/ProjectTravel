@@ -7,7 +7,7 @@
     <title>Contacts</title>
 </head>
 <body>
-    <header class="header">
+    <header class="header" id="header">
         <div class="container">
             <div class="header__wrapper">
                 <div class="header__logo">
@@ -17,38 +17,22 @@
                 <div class="header__nav">
                     <ul class="header__list">
                         <li><a href="./index.html">Домой</a></li>
-                        <li><a href="./routes.html">Интересное</a></li>
+                        <li><a href="./routes.html" id="routes">Интересное</a></li>
                         <li><a href="./contacts.html">Контакты</a></li>
                     </ul>
                 </div>
                 <div class="header__button">
                     <a href="./login.html">Login</a>
                 </div>
-                <div class="header__burger-block">
-                    <button class="header__burger" id="openBurger"><img src="./img/hamburger.svg" alt="svg"></button>
-                    <button class="header__burger-back" id="closeBurger">×</button>
+                <div class="header__burger" id="burger">
+                    <div class="burger__line"></div>
+                    <div class="burger__line"></div>
+                    <div class="burger__line"></div>
                 </div>
             </div>
             <hr color="#ABABAB">
         </div>
     </header>
-    <burger class="burger" id="burger">
-        <div class="container">
-            <div class="burger__wrapper">
-                <div class="burger__autorization">
-                    <a href="./login.html" class="burger__login">Login</a>
-                    <p>or</p>
-                    <a href="./register.html" class="burger__register">REGISTER</a>
-                </div>
-                <hr class="burger__hr" color="#ABABAB">
-                <ul class="burger__menu">
-                    <li><a href="./index.html">Домой</a></li>
-                    <li><a href="./routes.html">Интересное</a></li>
-                    <li><a href="./contacts.html">Контакты</a></li>
-                </ul>
-            </div>
-        </div>
-    </burger>
     <section class="contacts">
         <div class="container">
             <div class="contacts__block">

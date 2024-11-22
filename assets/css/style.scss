@@ -1284,48 +1284,58 @@ ul, li{
         padding: 0 10px;
         margin: 0 auto;
     }
-    .header{
-        
-        &__logo{
-            img{
-                width: 45px;
-                height: 45px;
-                margin-top: 12px;
-            }
-            h2{
-                font-size: 12px;
+    .header {
+        &__wrapper {
+            flex-direction: row;
+            align-items: center;
+        }
+
+        &__logo {
+            scale: .8;
+            h2 {
+                margin-top: 40px;
             }
         }
-        &__nav{
+
+        &__nav, &__button {
             display: none;
         }
-        &__button{
-            display: none;
+
+        &__burger {
+            display: flex;
         }
-        hr{
-            width: 380px;
-        }
-        &__burger{
-            display: block;
-            background: none;
-            border: none;
-            cursor: pointer;
-            margin-top: 20px;
-            margin-left: -10px;
-            &-back{
-                display: none;
+
+        &__wrapper.active {
+            .header__nav{
+                display: block;
                 position: absolute;
-                margin-top: 26px;
-                margin-left: -18px;
-                border: none;
-                background: none;
-                scale: 2;
+                top: 60px;
+                right: 20px;
+                background-color: #f8f8f8;
+                border-radius: 5px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                padding: 100px;
+                height: 300px;
             }
 
-        }
-        &__wrapper{
-            display: flex;
-            justify-content: space-between;
+            .header__button {
+                display: block;
+                position: absolute;
+                top: 70px;
+                right: 70px;
+                background-color: #f8f8f8;
+                border-radius: 5px;
+            }
+
+            .header__list {
+                flex-direction: column;
+                margin-top: -20px;
+                margin-right: -60px;
+            }
+
+            .header__button {
+                margin-top: 10px;
+            }
         }
     }
     .main{

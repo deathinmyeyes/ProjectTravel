@@ -1,3 +1,12 @@
+document.getElementById('burger').addEventListener('click', function() { //Создаем событие по клику для элемента burger
+  const wrapper = document.querySelector('.header__wrapper'); //Создаем переменную с html элементом .header__wrapper
+  if (wrapper.classList.toggle('active')) {   //С помощью условия добавляем класс active элементу header__wrapper методом toggle
+  document.querySelector('.main__wrapper').style.marginTop = '270px' //При открытом бургер меню - делаем отступ сверху 270px элементу route__input-wrapper
+  } else {
+    document.querySelector('.main__wrapper').style.marginTop = '0px' //При закрытом бургер меню - делаем отступ сверху 0px элементу route__input-wrapper
+  }
+  });
+
 const modal1 = document.querySelector('#modal1');
 const btn1 = document.querySelector('#openModal1');
 const close1 = document.querySelector('#close1');
@@ -56,9 +65,3 @@ function updateSlider() {
 }
 
 updateSlider();
-
-
-
-
-
-

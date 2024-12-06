@@ -25,7 +25,7 @@ let order = '';
 let filterByDistrict = '';
 let filterByType = '';
 
-function fetchData(page, sortBy = '', order = '', filterByDistrict = '', filterByType = '') {
+function fetchData(page, sortBy = '', order = '') {
     dataContainer.appendChild(loader);
     searchInput.style.display = 'none';
     dropDown.style.display = 'none';
@@ -39,12 +39,6 @@ function fetchData(page, sortBy = '', order = '', filterByDistrict = '', filterB
     if (sortBy && order) {
         urlParams.append('sortBy', sortBy);
         urlParams.append('order', order);
-    }
-    if (filterByDistrict) {
-        urlParams.append('filterByDistrict', filterByDistrict);
-    }
-    if (filterByType) {
-        urlParams.append('filterByType', filterByType);
     }
 
     const url = `https://672b170d976a834dd0258e17.mockapi.io/api/v1/tourism?${urlParams.toString()}`;
@@ -72,7 +66,7 @@ function fetchData(page, sortBy = '', order = '', filterByDistrict = '', filterB
         })
         .catch(error => {
             dataContainer.removeChild(loader);
-            console.error('Error fetching data:', error);
+            console.error('Ошибка загрузки данных', error);
         });
 }
 

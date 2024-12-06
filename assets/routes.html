@@ -40,7 +40,23 @@
                     <input type="text" id="searchInput" placeholder="Поиск...">
                     <input type="checkbox" name="check" id="checkbox" onclick="checkFluency()">
                 </div>
-                <div class="route__dropdown" id="dropdown">
+                <div id="filters">
+                    <select id="filterByDistrict">
+                        <option value="">Выберите район</option>
+                        <option value="Калининский">Калининский</option>
+                        <option value="Центральный">Центральный</option>
+                        <option value="Курчатовский">Курчатовский</option>
+                        <option value="Ленинский">Ленинский</option>
+                    </select>
+                    <select id="filterByType">
+                        <option value="">Выберите тип</option>
+                        <option value="Завод">Завод</option>
+                        <option value="Театр">Театр</option>
+                        <option value="Зоопарк">Зоопарк</option>
+                        <option value="Музей">Музей</option>
+                    </select>
+                </div>
+                <div class="route__dropdown" id="dropdown">                        
                     <button onclick="myFunction()" class="route__dropbtn">Сортировка</button>
                     <div id="myDropdown" class="route__dropdown-content">
                         <button id="sortByCategory">По категории</button>
@@ -49,7 +65,7 @@
                 </div>
             </div>
             <div class="route__wrapper" id="data"></div>
-            <div id="details" class="route__details" class="hidden"></div>
+            <div id="details" class="route__details hidden"></div>
             <div class="route__pagination" id="pagination"></div>
         </div>
     </section>

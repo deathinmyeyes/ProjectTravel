@@ -159,7 +159,7 @@ function checkFluency() {
 
 function myFunction() {
   document.getElementById("myDropdown").classList.toggle("show");
-}
+} 
 
 const sortByCategoryBtn = document.getElementById('sortByCategory');
 sortByCategoryBtn.addEventListener('click', () => {
@@ -266,3 +266,28 @@ filterByTypeSelect.addEventListener('change', () => {
   fetchData(currentPage, sortBy, order, filterByDistrict, filterByType);
 });
 
+window.addEventListener('load', () => {
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme === 'dark') {
+    document.getElementById('change_theme').classList.add('dark');
+    document.getElementById('style_link').setAttribute('href', './css/routes_dark.css');
+  } else {
+    document.getElementById('change_theme').classList.remove('dark');
+    document.getElementById('style_link').setAttribute('href', './css/routes.css');
+  }
+});
+
+document.getElementById('change_theme').addEventListener('click', () => {
+  const themeButton = document.getElementById('change_theme');
+  const styleLink = document.getElementById('style_link');
+
+  themeButton.classList.toggle('dark');
+
+  if (themeButton.classList.contains('dark')) {
+    styleLink.setAttribute('href', './css/routes_dark.css');
+    localStorage.setItem('theme', 'dark'); 
+  } else {
+    styleLink.setAttribute('href', './css/routes.css');
+    localStorage.setItem('theme', 'light'); 
+  }
+});

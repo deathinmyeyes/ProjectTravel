@@ -35,6 +35,7 @@ function fetchData(page, sortBy = '', order = '', filterByDistrict = '', filterB
   header.style.display = 'none';
   footer.style.display = 'none';
   filterBlock.style.display = 'none';
+  paginationContainer.style.display = 'none';
   document.getElementById('checkbox').style.display = 'none';
 
   const urlParams = new URLSearchParams();
@@ -65,6 +66,7 @@ function fetchData(page, sortBy = '', order = '', filterByDistrict = '', filterB
       header.style.display = 'block';
       footer.style.display = 'block';
       filterBlock.style.display = 'block';
+      paginationContainer.style.display = 'flex';
       document.getElementById('checkbox').style.display = 'block';
       if (data.length > 0) {
         allData = data;

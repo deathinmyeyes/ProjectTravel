@@ -211,13 +211,11 @@ ul, li {
 }
 .route__pagination {
   margin-top: 130px;
-  display: block;
   display: flex;
   justify-content: center;
   gap: 20px;
 }
 .route__pagination button {
-  display: block;
   background-color: #fff;
   border: 1px solid #000;
   color: #000;
@@ -229,6 +227,9 @@ ul, li {
 }
 .route__pagination button:hover {
   transform: scale(1.05);
+}
+.route__pagination-wrapper {
+  display: flex;
 }
 .route__input-wrapper p {
   font-size: 20px;

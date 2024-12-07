@@ -244,13 +244,11 @@ ul, li {
 
     &__pagination {
         margin-top: 130px;
-        display: block;
         display: flex;
         justify-content: center;
         gap: 20px;
 
         button {
-            display: block;
             background-color: #fff;
             border: 1px solid #000;
             color: #000;
@@ -263,6 +261,9 @@ ul, li {
             &:hover {
                 transform: scale(1.05);
             }
+        }
+        &-wrapper{
+            display: flex;
         }
     }
 

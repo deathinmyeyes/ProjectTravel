@@ -20,8 +20,6 @@ let sortBy = '';
 let order = '';
 let filterByDistrict = '';
 let filterByType = '';
-let currentImages = [];
-let currentImageIndex = 0;
 
 loader.id = 'loader';
 filterBlock.className = 'route__filter-block';
@@ -92,16 +90,16 @@ function displayData(data) {
     const itemElement = document.createElement("div");
     itemElement.className = 'route__card';
     itemElement.innerHTML = `
-      <img src="${item.image}" alt="Image" onclick="openGallery('${item.images.join("','")}')"></img>
-      <h2>${item.name}</h2>
-      <p>${item.description}</p>
-      <a href="?id=${item.id}">Подробнее</a>
-    `;
+    <img src="${item.image}" alt="Image"></img>
+    <h2>${item.name}</h2>
+    <p>${item.description}</p>
+    <a href="/assets/route/${item.id}" onclick="openDetailsWindow(${item.id})">Подробнее</a>
+  `;
     dataContainer.appendChild(itemElement);
     setTimeout(() => {
       itemElement.classList.add('visible');
     }, 50);
-  });
+  }); 
   updatePagination(data.length > 0);
 }
 
@@ -180,7 +178,9 @@ sortByRatingBtn.addEventListener('click', () => {
 });
 
 function openDetailsWindow(itemId) {
-  window.location.href = `?id=${itemId}`;
+  event.preventDefault();
+  history.pushState({ id: itemId }, '', `/assets/route/${itemId}`);
+  showDetails(itemId);
 }
 
 async function fetchAttractions() {
@@ -195,7 +195,7 @@ function renderAttractions(attractions) {
     const div = document.createElement('div');
     div.classList.add('route__card');
     div.innerHTML = `
-      <img src="${attraction.image}" alt="Image" onclick="openGallery('${attraction.images.join("','")}')"></img>
+      <img src="${attraction.image}" alt="Image"></img>
       <h2>${attraction.name}</h2>
       <p>${attraction.description}</p>
       <a href="?id=${attraction.id}">Подробнее</a>
@@ -220,10 +220,10 @@ async function showDetails(attractionId) {
       <h2>${attraction.name}</h2>
       <div class='route__details-wrapper'>
         <p>${attraction.descriptions[0]}</p>
-        <img src="${attraction.images[0]}" alt="Image" onclick="openGallery('${attraction.images.join("','")}')"></img>
+        <img src="${attraction.images[0]}" alt="Image"></img>
       </div>
       <div class='route__details-wrapper'>
-        <img src="${attraction.images[1]}" alt="Image" onclick="openGallery('${attraction.images.join("','")}')"></img>
+        <img src="${attraction.images[1]}" alt="Image"></img>
         <p>${attraction.descriptions[1]}</p>
       </div>
       <h2>Мы на карте</h2>
@@ -231,7 +231,7 @@ async function showDetails(attractionId) {
     `;
     detailsContainer.classList.remove('hidden');
   } else {
-    alert('error');
+    alert('Достопримечательность не найдена');
   }
 }
 
@@ -265,3 +265,4 @@ filterByTypeSelect.addEventListener('change', () => {
   currentPage = 1;
   fetchData(currentPage, sortBy, order, filterByDistrict, filterByType);
 });
+

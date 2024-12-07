@@ -10,6 +10,7 @@ $dark_hover: #2A2A2A;
     padding: 0;
     box-sizing: border-box;
     font-family: "Poppins", sans-serif;
+    transition: background-color ease .1s;
 }
 
 @font-face {
@@ -112,6 +113,7 @@ ul, li {
             margin-right: 20px;
             border: $dark_text 1px solid;
             color: $dark_text;
+            cursor: pointer;
             &::after{
                 content: '☀';  
             }
@@ -124,7 +126,7 @@ ul, li {
             color: #fff;
             &:hover {
                 font-weight: 600;
-                background-color: #1486D9;
+                background-color: #d99114;
             }
         }
     }
@@ -588,7 +590,7 @@ ul, li {
                 display: block;
                 position: absolute;
                 top: 70px;
-                right: 70px;
+                right: 50px;
                 background-color: $dark_card_bg;
                 border-radius: 5px;
             }

@@ -4,6 +4,7 @@
   padding: 0;
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
+  transition: background-color ease 0.1s;
 }
 
 @font-face {
@@ -97,6 +98,7 @@ ul, li {
   margin-right: 20px;
   border: #E0E0E0 1px solid;
   color: #E0E0E0;
+  cursor: pointer;
 }
 .header__button button::after {
   content: "☀";
@@ -109,7 +111,7 @@ ul, li {
 }
 .header__button a:hover {
   font-weight: 600;
-  background-color: #1486D9;
+  background-color: #d99114;
 }
 .header__burger {
   display: none;
@@ -505,7 +507,7 @@ ul, li {
     display: block;
     position: absolute;
     top: 70px;
-    right: 70px;
+    right: 50px;
     background-color: #1E1E1E;
     border-radius: 5px;
   }

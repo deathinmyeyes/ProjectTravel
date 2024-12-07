@@ -6,6 +6,7 @@ $second_color: #3D3D3D;
     padding: 0;
     box-sizing: border-box;
     font-family: "Poppins", sans-serif;
+    transition: background-color ease .1s;
 }
 
 @font-face {
@@ -93,6 +94,7 @@ ul, li {
             font-size: 20px;
             background-color: #fff;
             margin-right: 20px;
+            cursor: pointer;
             &::after{
                 content: '☀';  
             }
@@ -553,7 +555,7 @@ ul, li {
                 display: block;
                 position: absolute;
                 top: 70px;
-                right: 70px;
+                right: 50px;
                 background-color: #f8f8f8;
                 border-radius: 5px;
             }

@@ -32,3 +32,13 @@ function checkData() { //Создаем функцию
     }
 
 }
+
+window.addEventListener('load', () => {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+      document.getElementById('style_link').setAttribute('href', './css/style_dark.css');
+    } else {
+      document.getElementById('style_link').setAttribute('href', './css/style.css');
+    }
+  });
+  

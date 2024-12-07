@@ -1,3 +1,29 @@
+window.addEventListener('load', () => {
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme === 'dark') {
+    document.getElementById('change_theme').classList.add('dark');
+    document.getElementById('style_link').setAttribute('href', './css/style_dark.css');
+  } else {
+    document.getElementById('change_theme').classList.remove('dark');
+    document.getElementById('style_link').setAttribute('href', './css/style.css');
+  }
+});
+
+document.getElementById('change_theme').addEventListener('click', () => {
+  const themeButton = document.getElementById('change_theme');
+  const styleLink = document.getElementById('style_link');
+
+  themeButton.classList.toggle('dark');
+
+  if (themeButton.classList.contains('dark')) {
+    styleLink.setAttribute('href', './css/style_dark.css');
+    localStorage.setItem('theme', 'dark'); 
+  } else {
+    styleLink.setAttribute('href', './css/style.css');
+    localStorage.setItem('theme', 'light'); 
+  }
+});
+
 document.getElementById('burger').addEventListener('click', function() { //Создаем событие по клику для элемента burger
   const wrapper = document.querySelector('.header__wrapper'); //Создаем переменную с html элементом .header__wrapper
   if (wrapper.classList.toggle('active')) {   //С помощью условия добавляем класс active элементу header__wrapper методом toggle

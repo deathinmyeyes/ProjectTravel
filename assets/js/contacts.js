@@ -53,6 +53,28 @@ function checkData() { //Создаем функцию
 
 }
 
-
-
-
+window.addEventListener('load', () => {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+      document.getElementById('change_theme').classList.add('dark');
+      document.getElementById('style_link').setAttribute('href', './css/style_dark.css');
+    } else {
+      document.getElementById('change_theme').classList.remove('dark');
+      document.getElementById('style_link').setAttribute('href', './css/style.css');
+    }
+  });
+  
+  document.getElementById('change_theme').addEventListener('click', () => {
+    const themeButton = document.getElementById('change_theme');
+    const styleLink = document.getElementById('style_link');
+  
+    themeButton.classList.toggle('dark');
+  
+    if (themeButton.classList.contains('dark')) {
+      styleLink.setAttribute('href', './css/style_dark.css');
+      localStorage.setItem('theme', 'dark'); 
+    } else {
+      styleLink.setAttribute('href', './css/style.css');
+      localStorage.setItem('theme', 'light'); 
+    }
+  });

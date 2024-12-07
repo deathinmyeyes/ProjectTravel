@@ -6,6 +6,7 @@ $second_color: #3D3D3D;
     padding: 0;
     box-sizing: border-box;
     font-family: "Poppins", sans-serif;
+    transition: background-color ease .1s;
 }
 
 @font-face {
@@ -119,6 +120,18 @@ ul, li{
         margin-top: 20px;
         float: right;
 
+        button{
+            width: 36px;
+            height: 36px;
+            font-size: 20px;
+            background-color: #fff;
+            margin-right: 20px;
+            cursor: pointer;
+            &::after{
+                content: '☀';  
+            }
+        }
+
         a {
             background-color: $base_color;
             padding: 8px 29px;
@@ -127,7 +140,6 @@ ul, li{
             &:hover {
                 font-weight: 600;
                 background-color: #1486D9;
-                padding: 8px 27px;
             }
         }
     }
@@ -1323,7 +1335,7 @@ ul, li{
                 display: block;
                 position: absolute;
                 top: 70px;
-                right: 70px;
+                right: 50px;
                 background-color: #f8f8f8;
                 border-radius: 5px;
             }

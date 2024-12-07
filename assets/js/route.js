@@ -74,8 +74,8 @@ function fetchData(page, sortBy = '', order = '', filterByDistrict = '', filterB
           dropDown.classList.add('show');
         }, 10);
       } else {
-        fetchData(currentPage, sortBy, order, filterByDistrict, filterByType);
         currentPage = currentPage - 1;
+        fetchData(currentPage, sortBy, order, filterByDistrict, filterByType);
       }
     })
     .catch(error => {
@@ -117,6 +117,11 @@ function updatePagination(hasItems) {
     paginationContainer.appendChild(prevPageButton);
   }
 
+  const paginationCount = document.createElement('p')
+  paginationCount.textContent = `${currentPage}`;
+  paginationCount.style.fontSize = '20px';
+  paginationContainer.appendChild(paginationCount);
+
   if (hasItems) {
     const nextPageButton = document.createElement('button');
     nextPageButton.className = 'route__pagination-nBtn';
@@ -126,7 +131,7 @@ function updatePagination(hasItems) {
       fetchData(currentPage, sortBy, order, filterByDistrict, filterByType);
     });
     paginationContainer.appendChild(nextPageButton);
-  }
+  } 
 }
 
 searchInput.addEventListener('keydown', (event) => {

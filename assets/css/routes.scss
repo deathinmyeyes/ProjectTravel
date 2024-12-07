@@ -95,6 +95,7 @@ ul, li {
             background-color: #fff;
             margin-right: 20px;
             cursor: pointer;
+            border-radius: 5px 50% 50% 5px;
             &::after{
                 content: '☀';  
             }
@@ -235,7 +236,7 @@ ul, li {
         select{
             height: 50px;
             width: 200px;
-            font-size: 20px;            
+            font-size: 20px;
         }
     }
 

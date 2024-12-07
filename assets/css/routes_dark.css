@@ -99,6 +99,7 @@ ul, li {
   border: #E0E0E0 1px solid;
   color: #E0E0E0;
   cursor: pointer;
+  border-radius: 50% 5px 5px 50%;
 }
 .header__button button::after {
   content: "☀";

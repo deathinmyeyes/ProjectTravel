@@ -127,6 +127,7 @@ ul, li{
             background-color: #fff;
             margin-right: 20px;
             cursor: pointer;
+            border-radius: 5px 50% 50% 5px;
             &::after{
                 content: '☀';  
             }

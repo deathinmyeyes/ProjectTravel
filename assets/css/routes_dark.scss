@@ -114,6 +114,7 @@ ul, li {
             border: $dark_text 1px solid;
             color: $dark_text;
             cursor: pointer;
+            border-radius: 50% 5px 5px 50%;
             &::after{
                 content: '☀';  
             }

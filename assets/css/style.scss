@@ -1413,43 +1413,61 @@ ul, li{
             margin-top: -1050px;
         }
     }    
-    .footer{
-        margin-top: 1270px;
-        height: 350px;
-        &__wrapper{
-            margin-bottom: 20px;
+    .footer {
+        height: auto;
+        padding: 20px 0;
+
+        &__wrapper {
+            flex-direction: column;
+            gap: 20px;
         }
-        &__logo{
-            scale: 0.6;
-            margin-top: 50px;
-            img{
-                margin-left: -30px;
-                margin-bottom: -30px;
+
+        &__logo {
+            margin-top: 20px;
+
+            p {
+                margin-top: 20px;
             }
-            p{
+
+            &-text {
+                width: 100%;
+            }
+        }
+
+        &__navigation {
+            flex-direction: column;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        &__service-list, &__company-list {
+            p {
+                font-size: 18px;
+            }
+
+            li {
                 font-size: 16px;
-                margin-bottom: -30px;
-            }
-            &-text{
-                font-size: 10px;
-                width: 135px;
             }
         }
-        &__navigation{
-            font-size: 10px;
-        }
-        &__copyright{
-            margin-top: 10px;
-            scale: 0.6;
-            gap: 80px;
-            margin-left: -60px;
-            &-policy{
-                p{
-                    width: 115px;
+
+        &__copyright {
+            flex-direction: column;
+            gap: 10px;
+
+            p {
+                font-size: 14px;
+            }
+
+            &-policy {
+                gap: 20px;
+
+                p {
+                    font-size: 12px;
                 }
             }
         }
     }
+
     .contacts{
         .container{
             margin-left: -160px;

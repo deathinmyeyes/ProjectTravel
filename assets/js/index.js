@@ -39,10 +39,12 @@ const close1 = document.querySelector('#close1'); //Создаем конста�
 
 btn1.onclick = function () { //Привязываем функцию к элементу btn1
   modal1.style.display = 'block'; //Если функция срабатывает - то modal1 принимает стиль display: block
+  document.getElementById('footer').style.marginTop = '150px'
 };
 
 close1.onclick = function () { //Привязываем функцию к элементу close1
   modal1.style.display = 'none'; //Если функция срабатывает - то modal1 принимает стиль display: none
+  document.getElementById('footer').style.marginTop = '1270px'
 };
 
 
@@ -53,10 +55,12 @@ const close2 = document.querySelector('#close2'); //Создаем конста�
 
 btn2.onclick = function () { //Привязываем функцию к элементу btn2
   modal2.style.display = 'block'; //Если функция срабатывает - то modal2 принимает стиль display: block
+  document.getElementById('footer').style.marginTop = '150px'
 };
 
 close2.onclick = function () { //Привязываем функцию к элементу close2
   modal2.style.display = 'none'; //Если функция срабатывает - то modal2 принимает стиль display: none
+  document.getElementById('footer').style.marginTop = '1270px'
 };
 
 

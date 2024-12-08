@@ -179,7 +179,7 @@ sortByRatingBtn.addEventListener('click', () => {
 
 function openDetailsWindow(itemId) {
   event.preventDefault();
-  history.pushState({ id: itemId }, '', `/assets/route/${itemId}`);
+  history.pushState({ id: itemId }, '', `./${itemId}`);
   showDetails(itemId);
 }
 

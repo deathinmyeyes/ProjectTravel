@@ -215,6 +215,7 @@ async function showDetails(attractionId) {
     document.getElementById('pagination').style.display = 'none';
     filterBlock.style.display = 'none';
     dataContainer.style.display = 'none';
+    document.getElementById('change_theme').style.display = 'none'
 
     document.getElementById('index').setAttribute('href', '../index.html')
     document.getElementById('routes').setAttribute('href', '../routes.html')

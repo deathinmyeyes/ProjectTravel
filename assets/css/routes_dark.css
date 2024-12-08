@@ -135,6 +135,7 @@ ul, li {
   margin: 0 auto;
 }
 .route__card {
+  border: #E0E0E0 1px solid;
   background-color: #1E1E1E;
   width: 543px;
   height: -moz-max-content;

@@ -157,6 +157,7 @@ ul, li {
     }
 
     &__card {
+        border: $dark_text 1px solid;
         background-color: $dark_card_bg;
         width: 543px;
         height: max-content;

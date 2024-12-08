@@ -15,6 +15,7 @@ const galleryImage = document.getElementById('galleryImage');
 
 let allData = [];
 let currentPage = 1;
+let currentImageIndex = 0;
 let itemsPerPage = 10;
 let sortBy = '';
 let order = '';
@@ -204,6 +205,33 @@ function renderAttractions(attractions) {
   });
 }
 
+function openGallery(images, index) {
+  const gallery = document.getElementById('gallery');
+  const galleryImage = document.getElementById('galleryImage');
+  currentImageIndex = index;
+  galleryImage.src = images[currentImageIndex];
+  gallery.classList.add('show');
+}
+
+function closeGallery() {
+  const gallery = document.getElementById('gallery');
+  gallery.classList.remove('show');
+}
+
+function prevImage() {
+  const galleryImage = document.getElementById('galleryImage');
+  const images = Array.from(document.querySelectorAll('.route__details-wrapper img')).map(img => img.src);
+  currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+  galleryImage.src = images[currentImageIndex];
+}
+
+function nextImage() {
+  const galleryImage = document.getElementById('galleryImage');
+  const images = Array.from(document.querySelectorAll('.route__details-wrapper img')).map(img => img.src);
+  currentImageIndex = (currentImageIndex + 1) % images.length;
+  galleryImage.src = images[currentImageIndex];
+}
+
 function showDetails(attractionId) {
   fetchAttractions().then(attractions => {
     const attraction = attractions.find(a => a.id === attractionId);
@@ -227,10 +255,10 @@ function showDetails(attractionId) {
         <h2>${attraction.name}</h2>
         <div class='route__details-wrapper'>
           <p>${attraction.descriptions[0]}</p>
-          <img src="${attraction.images[0]}" alt="Image"></img>
+          <img src="${attraction.images[0]}" alt="Image" onclick="openGallery([${attraction.images.map(img => `'${img}'`)}], 0)">
         </div>
         <div class='route__details-wrapper'>
-          <img src="${attraction.images[1]}" alt="Image"></img>
+          <img src="${attraction.images[1]}" alt="Image" onclick="openGallery([${attraction.images.map(img => `'${img}'`)}], 1)">
           <p>${attraction.descriptions[1]}</p>
         </div>
         <h2>Мы на карте</h2>

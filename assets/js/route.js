@@ -179,7 +179,7 @@ sortByRatingBtn.addEventListener('click', () => {
 
 function openDetailsWindow(itemId) {
   event.preventDefault();
-  history.pushState({ id: itemId }, '', `./${itemId}`);
+  history.pushState({ id: itemId }, '', `./route/${itemId}`);
   showDetails(itemId);
 }
 
@@ -215,6 +215,11 @@ async function showDetails(attractionId) {
     document.getElementById('pagination').style.display = 'none';
     filterBlock.style.display = 'none';
     dataContainer.style.display = 'none';
+
+    document.getElementById('index').setAttribute('href', '../index.html')
+    document.getElementById('routes').setAttribute('href', '../routes.html')
+    document.getElementById('contacts').setAttribute('href', '../contacts.html')
+    document.getElementById('login').setAttribute('href', '../login.html')
 
     detailsContainer.innerHTML = `
       <h2>${attraction.name}</h2>

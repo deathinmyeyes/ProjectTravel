@@ -104,10 +104,12 @@ ul, li {
     &__button {
         margin-top: 20px;
         float: right;
+        display: flex;
 
         button{
             width: 36px;
             height: 36px;
+            display: block;
             font-size: 20px;
             background-color: $dark_bg;
             margin-right: 20px;

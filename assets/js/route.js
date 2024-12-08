@@ -204,42 +204,63 @@ function renderAttractions(attractions) {
   });
 }
 
-async function showDetails(attractionId) {
-  const attractions = await fetchAttractions();
-  const attraction = attractions.find(a => a.id === attractionId);
+function showDetails(attractionId) {
+  fetchAttractions().then(attractions => {
+    const attraction = attractions.find(a => a.id === attractionId);
 
-  if (attraction) {
-    searchInput.style.display = 'none';
-    dropDown.style.display = 'none';
-    document.getElementById('checkbox').style.display = 'none';
-    document.getElementById('pagination').style.display = 'none';
-    filterBlock.style.display = 'none';
-    dataContainer.style.display = 'none';
-    document.getElementById('change_theme').style.display = 'none'
+    if (attraction) {
+      searchInput.style.display = 'none';
+      dropDown.style.display = 'none';
+      document.getElementById('checkbox').style.display = 'none';
+      document.getElementById('pagination').style.display = 'none';
+      filterBlock.style.display = 'none';
+      dataContainer.style.display = 'none';
+      document.getElementById('change_theme').style.display = 'none';
 
-    document.getElementById('index').setAttribute('href', '../index.html')
-    document.getElementById('routes').setAttribute('href', '../routes.html')
-    document.getElementById('contacts').setAttribute('href', '../contacts.html')
-    document.getElementById('login').setAttribute('href', '../login.html')
+      document.getElementById('index').setAttribute('href', '../index.html');
+      document.getElementById('routes').setAttribute('href', '../routes.html');
+      document.getElementById('contacts').setAttribute('href', '../contacts.html');
+      document.getElementById('login').setAttribute('href', '../login.html');
 
-    detailsContainer.innerHTML = `
-      <h2>${attraction.name}</h2>
-      <div class='route__details-wrapper'>
-        <p>${attraction.descriptions[0]}</p>
-        <img src="${attraction.images[0]}" alt="Image"></img>
-      </div>
-      <div class='route__details-wrapper'>
-        <img src="${attraction.images[1]}" alt="Image"></img>
-        <p>${attraction.descriptions[1]}</p>
-      </div>
-      <h2>Мы на карте</h2>
-      ${attraction.location}
-    `;
-    detailsContainer.classList.remove('hidden');
-  } else {
-    alert('Достопримечательность не найдена');
-  }
+      detailsContainer.innerHTML = `
+        <h2>${attraction.name}</h2>
+        <div class='route__details-wrapper'>
+          <p>${attraction.descriptions[0]}</p>
+          <img src="${attraction.images[0]}" alt="Image"></img>
+        </div>
+        <div class='route__details-wrapper'>
+          <img src="${attraction.images[1]}" alt="Image"></img>
+          <p>${attraction.descriptions[1]}</p>
+        </div>
+        <h2>Мы на карте</h2>
+        ${attraction.location}
+      `;
+      detailsContainer.classList.remove('hidden');
+    } else {
+      alert('Достопримечательность не найдена');
+    }
+  });
 }
+
+window.addEventListener('popstate', (event) => {
+  if (event.state && event.state.id) {
+    showDetails(event.state.id);
+  } else {
+    fetchData(currentPage);
+    searchInput.style.display = 'block';
+    dropDown.style.display = 'block';
+    document.getElementById('checkbox').style.display = 'block';
+    document.getElementById('pagination').style.display = 'flex';
+    filterBlock.style.display = 'block';
+    dataContainer.style.display = 'block';
+    document.getElementById('change_theme').style.display = 'block';
+    detailsContainer.classList.add('hidden');
+    document.getElementById('index').setAttribute('href', './index.html');
+    document.getElementById('routes').setAttribute('href', './routes.html');
+    document.getElementById('contacts').setAttribute('href', './contacts.html');
+    document.getElementById('login').setAttribute('href', './login.html');
+  }
+});
 
 window.onload = async () => {
   fetchData(currentPage);

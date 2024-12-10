@@ -66,15 +66,23 @@
                 </div>
             </div>
             <div class="route__wrapper" id="data"></div>
+            <div class="route__pagination" id="pagination"></div>
             <div id="details" class="route__details hidden">
                 <form id="reviewForm">
                     <input type="text" id="reviewName" placeholder="Ваше имя" required>
                     <textarea id="reviewText" placeholder="Ваш отзыв" required></textarea>
+                    <div class="rating">
+                        <span class="star" data-value="1">★</span>
+                        <span class="star" data-value="2">★</span>
+                        <span class="star" data-value="3">★</span>
+                        <span class="star" data-value="4">★</span>
+                        <span class="star" data-value="5">★</span>
+                    </div>
+                    
                     <button type="submit">Оставить отзыв</button>
                 </form>
                 <div id="reviewsContainer"></div>
             </div>
-            <div class="route__pagination" id="pagination"></div>
         </div>
     </section>
     <footer class="footer" id="footer">

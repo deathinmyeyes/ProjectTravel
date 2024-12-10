@@ -91,16 +91,16 @@ function displayData(data) {
     const itemElement = document.createElement("div");
     itemElement.className = 'route__card';
     itemElement.innerHTML = `
-    <img src="${item.image}" alt="Image"></img>
-    <h2>${item.name}</h2>
-    <p>${item.description}</p>
-    <a href="/assets/route/${item.id}" onclick="openDetailsWindow(${item.id})">Подробнее</a>
-  `;
+      <img src="${item.image}" alt="Image"></img>
+      <h2>${item.name}</h2>
+      <p>${item.description}</p>
+      <a href="#" onclick="openDetailsWindow(${item.id})">Подробнее</a>
+    `;
     dataContainer.appendChild(itemElement);
     setTimeout(() => {
       itemElement.classList.add('visible');
     }, 50);
-  }); 
+  });
   updatePagination(data.length > 0);
 }
 
@@ -179,30 +179,22 @@ sortByRatingBtn.addEventListener('click', () => {
 });
 
 function openDetailsWindow(itemId) {
-  event.preventDefault();
-  history.pushState({ id: itemId }, '', `./route/${itemId}`);
-  showDetails(itemId);
+  event.preventDefault(); 
+  history.pushState({ id: itemId }, '', `./route/${itemId}`); 
+  showDetails(itemId); 
 }
+
+window.addEventListener('popstate', (event) => {
+  if (event.state && event.state.id) {
+    showDetails(event.state.id); 
+  } else {
+    fetchData(currentPage);
+  }
+});
 
 async function fetchAttractions() {
   const response = await fetch('https://672b170d976a834dd0258e17.mockapi.io/api/v1/tourism');
   return response.json();
-}
-
-function renderAttractions(attractions) {
-  dataContainer.innerHTML = '';
-
-  attractions.forEach(attraction => {
-    const div = document.createElement('div');
-    div.classList.add('route__card');
-    div.innerHTML = `
-      <img src="${attraction.image}" alt="Image"></img>
-      <h2>${attraction.name}</h2>
-      <p>${attraction.description}</p>
-      <a href="?id=${attraction.id}">Подробнее</a>
-    `;
-    dataContainer.appendChild(div);
-  });
 }
 
 function openGallery(images, index) {
@@ -232,8 +224,9 @@ function nextImage() {
   galleryImage.src = images[currentImageIndex];
 }
 
-function showDetails(attractionId) {
-  fetchAttractions().then(attractions => {
+async function showDetails(attractionId) {
+  try {
+    const attractions = await fetchAttractions();
     const attraction = attractions.find(a => a.id === attractionId);
 
     if (attraction) {
@@ -268,7 +261,10 @@ function showDetails(attractionId) {
     } else {
       alert('Достопримечательность не найдена');
     }
-  });
+  } catch (error) {
+    console.error('Ошибка при загрузке данных:', error);
+    alert('Произошла ошибка при загрузке данных');
+  }
 }
 
 window.addEventListener('popstate', (event) => {
@@ -292,11 +288,18 @@ window.addEventListener('popstate', (event) => {
 });
 
 window.onload = async () => {
-  fetchData(currentPage);
-  const params = new URLSearchParams(window.location.search);
-  const attractionId = params.get('id');
-  if (attractionId) {
-    showDetails(Number(attractionId));
+  const path = window.location.pathname; 
+  const parts = path.split('/'); 
+
+  if (parts[1] === 'route' && parts[2]) {
+    const routeId = parseInt(parts[2], 10); 
+    if (!isNaN(routeId)) {
+      showDetails(routeId); 
+    } else {
+      alert('Неверный идентификатор маршрута');
+    }
+  } else {
+    fetchData(currentPage);
   }
 };
 
@@ -322,28 +325,185 @@ filterByTypeSelect.addEventListener('change', () => {
   fetchData(currentPage, sortBy, order, filterByDistrict, filterByType);
 });
 
-window.addEventListener('load', () => {
-  const savedTheme = localStorage.getItem('theme');
-  if (savedTheme === 'dark') {
-    document.getElementById('change_theme').classList.add('dark');
-    document.getElementById('style_link').setAttribute('href', './css/routes_dark.css');
-  } else {
-    document.getElementById('change_theme').classList.remove('dark');
-    document.getElementById('style_link').setAttribute('href', './css/routes.css');
+
+
+class ThemeManager {
+  constructor() {
+      this.themeButton = document.getElementById('change_theme');
+      this.styleLink = document.getElementById('style_link');
+      this.lightThemePath = './css/routes.css';
+      this.darkThemePath = './css/routes_dark.css';
+
+      this.init();
   }
+
+  init() {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'dark') {
+          this.setDarkTheme();
+      } else {
+          this.setLightTheme();
+      }
+
+      this.themeButton.addEventListener('click', () => this.toggleTheme());
+  }
+
+  setDarkTheme() {
+      this.themeButton.classList.add('dark');
+      this.styleLink.setAttribute('href', this.darkThemePath);
+  }
+
+  setLightTheme() {
+      this.themeButton.classList.remove('dark');
+      this.styleLink.setAttribute('href', this.lightThemePath);
+  }
+
+  toggleTheme() {
+      if (this.themeButton.classList.contains('dark')) {
+          this.setLightTheme();
+          localStorage.setItem('theme', 'light');
+      } else {
+          this.setDarkTheme();
+          localStorage.setItem('theme', 'dark');
+      }
+  }
+}
+
+window.addEventListener('load', () => {
+  new ThemeManager();
 });
 
-document.getElementById('change_theme').addEventListener('click', () => {
-  const themeButton = document.getElementById('change_theme');
-  const styleLink = document.getElementById('style_link');
 
-  themeButton.classList.toggle('dark');
 
-  if (themeButton.classList.contains('dark')) {
-    styleLink.setAttribute('href', './css/routes_dark.css');
-    localStorage.setItem('theme', 'dark'); 
-  } else {
-    styleLink.setAttribute('href', './css/routes.css');
-    localStorage.setItem('theme', 'light'); 
-  }
+const API_URL = 'https://672b170d976a834dd0258e17.mockapi.io/api/v1';
+
+class ReviewManager {
+    constructor() {
+        this.reviewsContainer = document.getElementById('reviewsContainer');
+        this.reviewForm = document.getElementById('reviewForm');
+        this.ratingStars = document.querySelectorAll('.rating .star');
+        this.selectedRating = 0;
+
+        this.init();
+    }
+
+    async init() {
+        await this.fetchAllReviews();
+        this.setupEventListeners();
+    }
+
+    async fetchAllReviews() {
+        try {
+            const response = await fetch(`${API_URL}/reviews`);
+            const reviews = await response.json();
+            this.displayReviews(reviews);
+        } catch (error) {
+            console.error('Ошибка при загрузке отзывов:', error);
+        }
+    }
+
+    displayReviews(reviews) {
+        this.reviewsContainer.innerHTML = '';
+
+        reviews.forEach(review => {
+            const reviewElement = document.createElement('div');
+            reviewElement.className = 'review';
+            reviewElement.innerHTML = `
+                <p><strong>${review.name}</strong>: ${review.text}</p>
+                <div class="rating">
+                    ${this.generateStars(review.rating)}
+                </div>
+                <button onclick="reviewManager.deleteReview(${review.id})">Удалить</button>
+            `;
+            this.reviewsContainer.appendChild(reviewElement);
+        });
+    }
+
+    generateStars(rating) {
+        let starsHTML = '';
+        for (let i = 1; i <= 5; i++) {
+            if (i <= rating) {
+                starsHTML += '<span class="star selected">★</span>';
+            } else {
+                starsHTML += '<span class="star">★</span>';
+            }
+        }
+        return starsHTML;
+    }
+
+    setupEventListeners() {
+        this.ratingStars.forEach(star => {
+            star.addEventListener('click', () => {
+                this.selectedRating = parseInt(star.getAttribute('data-value'), 10);
+                this.highlightStars(this.selectedRating);
+            });
+        });
+
+        this.reviewForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const name = document.getElementById('reviewName').value;
+            const text = document.getElementById('reviewText').value;
+
+            if (!name || !text || this.selectedRating === 0) {
+                alert('Пожалуйста, заполните все поля и выберите рейтинг');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_URL}/reviews`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        name,
+                        text,
+                        rating: this.selectedRating,
+                    }),
+                });
+
+                if (response.ok) {
+                    await this.fetchAllReviews();
+                    this.reviewForm.reset();
+                    this.highlightStars(0);
+                } else {
+                    alert('Ошибка при добавлении отзыва');
+                }
+            } catch (error) {
+                console.error('Ошибка при отправке отзыва:', error);
+            }
+        });
+    }
+
+    highlightStars(rating) {
+        this.ratingStars.forEach(star => {
+            const starValue = parseInt(star.getAttribute('data-value'), 10);
+            if (starValue <= rating) {
+                star.classList.add('selected');
+            } else {
+                star.classList.remove('selected');
+            }
+        });
+    }
+
+    async deleteReview(reviewId) {
+        try {
+            const response = await fetch(`${API_URL}/reviews/${reviewId}`, {
+                method: 'DELETE',
+            });
+
+            if (response.ok) {
+                await this.fetchAllReviews();
+            } else {
+                alert('Ошибка при удалении отзыва');
+            }
+        } catch (error) {
+            console.error('Ошибка при удалении отзыва:', error);
+        }
+    }
+}
+
+window.addEventListener('load', () => {
+    window.reviewManager = new ReviewManager();
 });

@@ -138,7 +138,7 @@ ul, li {
     }
 
     &__card {
-        border: #121212 1px solid;
+        box-shadow: 0px 0px 25px 0px rgba(34, 60, 80, 0.3);
         background-color: #F6F6F6;
         width: 543px;
         height: max-content;
@@ -388,7 +388,8 @@ ul, li {
           transition: 0.6s ease;
           border-radius: 0 3px 3px 0;
           user-select: none;
-          background-color: rgba(0, 0, 0, 0.5);
+          border: #fff 2px solid;
+          background: none;
     
           &:hover {
             background-color: rgba(0, 0, 0, 0.8);
@@ -515,9 +516,29 @@ ul, li {
     }
 }
 
+.rating {
+    display: inline-block;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.rating .star {
+    color: gray;
+    transition: color 0.2s;
+}
+
+.rating .star.selected,
+.rating .star:hover {
+    color: gold;
+}
+
 .show {
     display: block;
     opacity: 1;
+}
+
+#details{
+    margin-top: 100px;
 }
 
 #searchInput {

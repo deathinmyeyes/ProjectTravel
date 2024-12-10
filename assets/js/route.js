@@ -35,6 +35,8 @@ function fetchData(page, sortBy = '', order = '', filterByDistrict = '', filterB
   footer.style.display = 'none';
   filterBlock.style.display = 'none';
   paginationContainer.style.display = 'none';
+  reviewForm.style.display = 'none';
+  reviewsContainer.style.display = 'none';
   document.getElementById('checkbox').style.display = 'none';
 
   const urlParams = new URLSearchParams();
@@ -67,6 +69,9 @@ function fetchData(page, sortBy = '', order = '', filterByDistrict = '', filterB
       filterBlock.style.display = 'block';
       paginationContainer.style.display = 'flex';
       document.getElementById('checkbox').style.display = 'block';
+      reviewForm.style.display = 'flex';
+      reviewsContainer.style.display = 'block';
+
       if (data.length > 0) {
         allData = data;
         displayData(allData);
@@ -383,6 +388,8 @@ class ReviewManager {
         this.reviewForm = document.getElementById('reviewForm');
         this.ratingStars = document.querySelectorAll('.rating .star');
         this.selectedRating = 0;
+        this.averageRatingElement = document.getElementById('averageRating');
+        this.totalReviewsElement = document.getElementById('totalReviews');
 
         this.init();
     }
@@ -397,6 +404,7 @@ class ReviewManager {
             const response = await fetch(`${API_URL}/reviews`);
             const reviews = await response.json();
             this.displayReviews(reviews);
+            this.calculateAndDisplayAverageRating(reviews);
         } catch (error) {
             console.error('Ошибка при загрузке отзывов:', error);
         }
@@ -409,11 +417,18 @@ class ReviewManager {
             const reviewElement = document.createElement('div');
             reviewElement.className = 'review';
             reviewElement.innerHTML = `
-                <p><strong>${review.name}</strong>: ${review.text}</p>
+              <div class="title">
+                <h3>${review.name}</h3>
                 <div class="rating">
                     ${this.generateStars(review.rating)}
                 </div>
+              <div class="reviewBtn">
                 <button onclick="reviewManager.deleteReview(${review.id})">Удалить</button>
+              </div>
+              </div>
+              <div class="sub-title">
+                <p>${review.text}</p>
+              </div>
             `;
             this.reviewsContainer.appendChild(reviewElement);
         });
@@ -501,6 +516,19 @@ class ReviewManager {
         } catch (error) {
             console.error('Ошибка при удалении отзыва:', error);
         }
+    }
+
+    calculateAndDisplayAverageRating(reviews) {
+        if (reviews.length === 0) {
+            this.averageRatingElement.textContent = '0';
+            this.totalReviewsElement.textContent = '0';
+            return;
+        }
+
+        const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
+        const averageRating = (totalRating / reviews.length).toFixed(1);
+        this.averageRatingElement.textContent = averageRating;
+        this.totalReviewsElement.textContent = reviews.length;
     }
 }
 

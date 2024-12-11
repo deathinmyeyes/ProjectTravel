@@ -157,7 +157,7 @@ ul, li {
     }
 
     &__card {
-        box-shadow: 0px 0px 25px 0px rgba(140, 140, 140, 0.3);
+        box-shadow: 0px 0px 25px 0px rgba(34, 60, 80, 0.3);
         background-color: $dark_card_bg;
         width: 543px;
         height: max-content;
@@ -321,11 +321,14 @@ ul, li {
     &__details {
         text-align: center;
         margin-top: -100px;
+        display: flex;
+        justify-content: center;
+        gap: 50px;
 
         h2 {
             font-size: 42px;
             text-align: center;
-            color: $base_color;
+            color: #195581;
             margin-top: 100px;
         }
 
@@ -341,7 +344,6 @@ ul, li {
                 font-size: 24px;
                 width: 300px;
                 text-align: left;
-                color: $dark_text;
             }
 
             img {
@@ -350,11 +352,122 @@ ul, li {
             }
         }
 
+        form{
+            box-shadow: 0px 0px 25px 0px rgba(34, 60, 80, 0.3);
+            background-color: $dark_card_bg; 
+            border-radius: 35px;   
+            width: 400px;  
+            padding: 30px;
+            height: max-content;
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+            h1{
+                color: $base_color;
+                font-weight: bold;
+                margin-bottom: 30px;
+                text-align: center;
+            }
+            input{
+                width: 300px;
+                height: auto;
+                background: none;
+                border: none;
+                border-bottom: 1px solid $base_color;
+                outline: none;
+                margin-bottom: 30px;
+                color: #fff;
+
+                &:user-invalid{
+                    border-bottom: 1px solid red;
+                }
+            }
+
+            button{
+                width: max-content;
+                background: none;
+                border: none;
+                margin-top: 30px;
+                background-color: $base_color;
+                border-radius: 35px;
+                padding: 10px 20px;
+                color: #fff;
+                font-weight: 600;
+                font-size: 14px;
+                cursor: pointer;
+                transition: all ease-in-out .2s;
+                &:hover{
+                    transform: scale(1.03);
+                }
+            }
+            .stats{
+                margin-top: 30px;
+                p{
+                    &::last-letter{
+                        color: gold;
+                    }
+                    span{
+                        color: $dark_text;
+                    }
+                }
+            }
+        }
+        #reviewsContainer {
+            .review {
+                box-shadow: 0px 0px 25px 0px rgba(34, 60, 80, 0.3);
+                background-color: $dark_card_bg; 
+                border-radius: 35px;   
+                width: 500px;
+                margin-top: 30px;
+                padding: 15px 20px;
+                button{
+                    float: right;
+                    border:none;
+                    outline: none;
+                    font-size: 18px;
+                    background: none;
+                    cursor: pointer;
+                    transition: all ease-in-out .1s;
+                    &:hover{
+                        transform: scale(1.03);
+                        opacity: .9;
+                    }
+                }
+                .title {
+                    display: flex;
+                    gap: 10px;
+                    align-items: center;
+        
+                    h3 {
+                        max-width: 300px;
+                        text-align: left;   
+                        word-wrap: break-word; 
+                    }
+        
+                    .reviewBtn {
+                        margin-left: 200px;
+                    }
+                }
+        
+                .sub-title {
+                    display: flex;
+                    text-align: left;
+        
+                    p {
+                        width: 400px;
+                        word-wrap: break-word; 
+                    }
+                }
+            }
+        }
+
+
         iframe {
             justify-content: center;
             margin-top: 30px;
         }
     }
+
     &__gallery {
         display: none;
         position: fixed;
@@ -546,6 +659,26 @@ ul, li {
             }
         }
     }
+}
+
+.rating {
+    display: inline-block;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.rating .star {
+    color: gray;
+    transition: color 0.2s;
+}
+
+.rating .star.selected,
+.rating .star:hover {
+    color: gold;
+}
+
+#details{
+    margin-top: 100px;
 }
 
 .show {

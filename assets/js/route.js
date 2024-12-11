@@ -417,13 +417,13 @@ class ReviewManager {
             const reviewElement = document.createElement('div');
             reviewElement.className = 'review';
             reviewElement.innerHTML = `
+              <button onclick="reviewManager.deleteReview(${review.id})">🗑️</button>
               <div class="title">
                 <h3>${review.name}</h3>
                 <div class="rating">
                     ${this.generateStars(review.rating)}
                 </div>
               <div class="reviewBtn">
-                <button onclick="reviewManager.deleteReview(${review.id})">Удалить</button>
               </div>
               </div>
               <div class="sub-title">

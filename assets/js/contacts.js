@@ -134,3 +134,33 @@ class ThemeManager {
 }
 
 const themeManager = new ThemeManager('change_theme', 'style_link');
+
+
+
+class UserManager {
+  constructor() {
+    this.loginLink = document.getElementById('login-link');
+    this.profileLink = document.getElementById('profile-link');
+  }
+
+  checkUserStatus() {
+    const user = JSON.parse(localStorage.getItem('user'));
+
+    if (user) {
+      this.loginLink.style.display = 'none';
+      this.profileLink.style.display = 'inline';
+    } else {
+      this.loginLink.style.display = 'inline';
+      this.profileLink.style.display = 'none';
+    }
+  }
+
+  init() {
+    document.addEventListener('DOMContentLoaded', () => {
+      this.checkUserStatus();
+    });
+  }
+}
+
+const userManager = new UserManager();
+userManager.init();

@@ -28,7 +28,10 @@ loader.innerHTML = "<img src='./img/25.gif' alt='loader'></img>";
 dataContainer.appendChild(loader);
 
 function fetchData(page, sortBy = '', order = '', filterByDistrict = '', filterByType = '', searchTerm = '') {
-  dataContainer.appendChild(loader);
+  if (!dataContainer.contains(loader)) {
+    dataContainer.appendChild(loader);
+  }
+
   searchInput.style.display = 'none';
   dropDown.style.display = 'none';
   header.style.display = 'none';
@@ -61,6 +64,7 @@ function fetchData(page, sortBy = '', order = '', filterByDistrict = '', filterB
   fetch(url)
     .then(response => response.json())
     .then(data => {
+      // Показываем элементы интерфейса
       dataContainer.style.display = 'block';
       searchInput.style.display = 'block';
       dropDown.style.display = 'block';
@@ -75,7 +79,11 @@ function fetchData(page, sortBy = '', order = '', filterByDistrict = '', filterB
       if (data.length > 0) {
         allData = data;
         displayData(allData);
-        dataContainer.removeChild(loader);
+
+        if (dataContainer.contains(loader)) {
+          dataContainer.removeChild(loader);
+        }
+
         setTimeout(() => {
           dropDown.classList.add('show');
         }, 10);
@@ -85,7 +93,9 @@ function fetchData(page, sortBy = '', order = '', filterByDistrict = '', filterB
       }
     })
     .catch(error => {
-      dataContainer.removeChild(loader);
+      if (dataContainer.contains(loader)) {
+        dataContainer.removeChild(loader);
+      }
       console.error('Ошибка загрузки данных', error);
     });
 }
@@ -235,19 +245,25 @@ async function showDetails(attractionId) {
     const attraction = attractions.find(a => a.id === attractionId);
 
     if (attraction) {
+      // Скрываем элементы интерфейса
       searchInput.style.display = 'none';
       dropDown.style.display = 'none';
       document.getElementById('checkbox').style.display = 'none';
-      document.getElementById('pagination').style.display = 'none';
+      paginationContainer.style.display = 'none';
       filterBlock.style.display = 'none';
       dataContainer.style.display = 'none';
       document.getElementById('change_theme').style.display = 'none';
       detailsContainer.style.display = 'block';
 
-      document.getElementById('index').setAttribute('href', '../index.html');
-      document.getElementById('routes').setAttribute('href', '../routes.html');
-      document.getElementById('contacts').setAttribute('href', '../contacts.html');
-      document.getElementById('login').setAttribute('href', '../login.html');
+      const indexLink = document.getElementById('index');
+      const routesLink = document.getElementById('routes');
+      const contactsLink = document.getElementById('contacts');
+      const loginLink = document.getElementById('login');
+
+      if (indexLink) indexLink.setAttribute('href', '../index.html');
+      if (routesLink) routesLink.setAttribute('href', '../routes.html');
+      if (contactsLink) contactsLink.setAttribute('href', '../contacts.html');
+      if (loginLink) loginLink.setAttribute('href', '../login.html');
 
       detailsContainer.innerHTML = `
         <h2>${attraction.name}</h2>
@@ -277,18 +293,25 @@ window.addEventListener('popstate', (event) => {
     showDetails(event.state.id);
   } else {
     fetchData(currentPage);
+
     searchInput.style.display = 'block';
     dropDown.style.display = 'block';
     document.getElementById('checkbox').style.display = 'block';
-    document.getElementById('pagination').style.display = 'flex';
+    paginationContainer.style.display = 'flex';
     filterBlock.style.display = 'block';
     dataContainer.style.display = 'block';
     document.getElementById('change_theme').style.display = 'block';
     detailsContainer.style.display = 'none';
-    document.getElementById('index').setAttribute('href', './index.html');
-    document.getElementById('routes').setAttribute('href', './routes.html');
-    document.getElementById('contacts').setAttribute('href', './contacts.html');
-    document.getElementById('login').setAttribute('href', './login.html');
+
+    const indexLink = document.getElementById('index');
+    const routesLink = document.getElementById('routes');
+    const contactsLink = document.getElementById('contacts');
+    const loginLink = document.getElementById('login');
+
+    if (indexLink) indexLink.setAttribute('href', './index.html');
+    if (routesLink) routesLink.setAttribute('href', './routes.html');
+    if (contactsLink) contactsLink.setAttribute('href', './contacts.html');
+    if (loginLink) loginLink.setAttribute('href', './login.html');
   }
 });
 
@@ -535,3 +558,33 @@ class ReviewManager {
 window.addEventListener('load', () => {
     window.reviewManager = new ReviewManager();
 });
+
+
+
+class UserManager {
+  constructor() {
+    this.loginLink = document.getElementById('login-link');
+    this.profileLink = document.getElementById('profile-link');
+  }
+
+  checkUserStatus() {
+    const user = JSON.parse(localStorage.getItem('user'));
+
+    if (user) {
+      this.loginLink.style.display = 'none';
+      this.profileLink.style.display = 'inline';
+    } else {
+      this.loginLink.style.display = 'inline';
+      this.profileLink.style.display = 'none';
+    }
+  }
+
+  init() {
+    document.addEventListener('DOMContentLoaded', () => {
+      this.checkUserStatus();
+    });
+  }
+}
+
+const userManager = new UserManager();
+userManager.init();

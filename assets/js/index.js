@@ -132,3 +132,31 @@ class Slider {
 }
 
 const slider = new Slider('.main__slider', '.main__prev-button', '.main__next-button');
+
+class UserManager {
+  constructor() {
+    this.loginLink = document.getElementById('login-link');
+    this.profileLink = document.getElementById('profile-link');
+  }
+
+  checkUserStatus() {
+    const user = JSON.parse(localStorage.getItem('user'));
+
+    if (user) {
+      this.loginLink.style.display = 'none';
+      this.profileLink.style.display = 'inline';
+    } else {
+      this.loginLink.style.display = 'inline';
+      this.profileLink.style.display = 'none';
+    }
+  }
+
+  init() {
+    document.addEventListener('DOMContentLoaded', () => {
+      this.checkUserStatus();
+    });
+  }
+}
+
+const userManager = new UserManager();
+userManager.init();

@@ -1,0 +1,349 @@
+$base_color: #195581;
+$second_color: #3D3D3D;
+$primary-color: #195581;
+$secondary-color: #ABABAB;
+$text-color: #333;
+$border-color: #E0E0E0;
+$button-color: #195581;
+$button-hover-color: #1486D9;
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+    transition: background-color ease .1s;
+}
+
+@font-face {
+    font-family: Poppins;
+    src: url(../fonts/Poppins-Regular.ttf);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@mixin flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  @mixin button-style {
+    background-color: $button-color;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  
+    &:hover {
+      background-color: $button-hover-color;
+    }
+  }
+
+body{
+    transition: background-color .1s ease;
+}
+
+a {
+    text-decoration: none;
+}
+
+ul, li {
+    list-style: none;
+}
+
+.container {
+    width: 1440px;
+    padding: 0 20px;
+    margin: 0 auto;
+}
+
+.header {
+    margin-bottom: 50px;
+    opacity: 0;
+    animation: fadeIn 1.5s forwards;
+
+    &__wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__logo {
+        display: flex;
+        gap: 5px;
+
+        h2 {
+            margin-top: 40px;
+            color: #000;
+        }
+    }
+
+    &__list {
+        margin-left: -90px;
+        margin-top: 20px;
+        display: flex;
+        gap: 60px;
+        font-size: 20px;
+        li {
+            display: flex;
+
+            a {
+                font-weight: 400;
+                color: #000;
+                transition: scale ease-in-out .25s;
+
+                &:hover {
+                    font-weight: bold;
+                    cursor: pointer;
+                    scale: 0.9;
+                }
+            }
+        }
+    }
+
+    &__button {
+        margin-top: 20px;
+        float: right;
+        display: flex;
+
+        button{
+            width: 36px;
+            height: 36px;
+            font-size: 20px;
+            background-color: #fff;
+            margin-right: 20px;
+            display: block;
+            cursor: pointer;
+            border-radius: 5px 50% 50% 5px;
+            &::after{
+                content: '☀';  
+            }
+        }
+
+        a {
+            background-color: $base_color;
+            padding: 8px 29px;
+            border-radius: 6px;
+            color: #fff;
+            &:hover {
+                font-weight: 600;
+                background-color: #1486D9;
+            }
+        }
+    }
+
+    &__burger {
+        display: none;
+        flex-direction: column;
+        cursor: pointer;
+
+        .burger__line {
+            width: 25px;
+            height: 3px;
+            background-color: #333;
+            margin: 4px 0;
+        }
+    }
+}
+
+.profile {
+  padding: 40px 0;
+
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    color: $primary-color;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  #user-info {
+    margin-bottom: 30px;
+
+    p {
+      font-size: 1.2rem;
+      color: $text-color;
+      margin: 10px 0;
+
+      strong {
+        color: $primary-color;
+      }
+    }
+  }
+
+  #change-password-form {
+    margin-bottom: 30px;
+
+    h2 {
+      font-size: 1.8rem;
+      color: $primary-color;
+      margin-bottom: 20px;
+    }
+
+    p {
+      margin: 15px 0;
+
+      label {
+        display: block;
+        font-size: 1rem;
+        color: $text-color;
+        margin-bottom: 5px;
+      }
+
+      input[type="password"] {
+        width: 100%;
+        padding: 10px;
+        font-size: 1rem;
+        border: 1px solid $border-color;
+        border-radius: 5px;
+        outline: none;
+
+        &:focus {
+          border-color: $primary-color;
+        }
+      }
+    }
+
+    button {
+      @include button-style;
+    }
+  }
+
+  #logout-link {
+    display: inline-block;
+    color: $button-color;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: $button-hover-color;
+    }
+  }
+}
+
+.footer {
+    animation: fadeIn 1.5s;
+    background-color: #F6F6F6;
+    width: 100%;
+    height: 520px;
+    margin-top: 150px;
+
+    &__wrapper {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 100px;
+    }
+
+    &__logo {
+        margin-top: 40px;
+        display: flex;
+        gap: 5px;
+
+        p {
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 40px;
+        }
+
+        &-text {
+            width: 218px;
+            color: $second_color;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+    }
+
+    &__navigation {
+        display: flex;
+        gap: 80px;
+        margin-top: 100px;
+        font-size: 16px;
+    }
+
+    &__service-list {
+        p {
+            color: $base_color;
+            font-weight: bold;
+        }
+
+        li {
+            color: $second_color;
+            margin-top: 10px;
+            cursor: pointer;
+            transition: all ease-in-out .2s;
+
+            &:hover {
+                transform: scale(1.05);
+                opacity: .85;
+            }
+        }
+    }
+
+    &__company-list {
+        p {
+            color: $base_color;
+            font-weight: bold;
+        }
+
+        li {
+            color: $second_color;
+            margin-top: 10px;
+            cursor: pointer;
+            transition: all ease-in-out .2s;
+
+            &:hover {
+                transform: scale(1.05);
+                opacity: .85;
+            }
+        }
+    }
+
+    &__copyright {
+        margin-top: 40px;
+        display: flex;
+        justify-content: space-between;
+
+        p {
+            font-size: 16px;
+
+            span {
+                font-weight: bold;
+            }
+        }
+
+        &-policy {
+            display: flex;
+            gap: 40px;
+
+            p {
+                font-size: 14px;
+                transition: all ease-in-out .2s;
+                cursor: pointer;
+
+                &:hover {
+                    transform: scale(1.05);
+                    opacity: .85;
+                }
+            }
+        }
+    }
+}

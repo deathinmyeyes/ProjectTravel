@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link id="style_link" rel="stylesheet" href="./css/profile.css">
+    <title>Document</title>
+</head>
+<body>
+    <header class="header" id="header">
+        <div class="container">
+            <div class="header__wrapper">
+                <a href="./index.html">
+                    <div class="header__logo">
+                        <img src="./img/logo.svg" alt="logo">
+                        <h2>TRAVEL.guide</h2>
+                    </div>
+                </a>
+                <div class="header__nav">
+                    <ul class="header__list">
+                        <li><a href="./index.html">Домой</a></li>
+                        <li><a href="./routes.html" id="routes">Интересное</a></li>
+                        <li><a href="./contacts.html">Контакты</a></li>
+                    </ul>
+                </div>
+                <div class="header__button">
+                    <button type="submit" id="change_theme"></button>
+                    <a href="./index.html" id="login-link">Назад</a>
+                </div>
+                <div class="header__burger" id="burger">
+                    <div class="burger__line"></div>
+                    <div class="burger__line"></div>
+                    <div class="burger__line"></div>
+                </div>
+            </div>
+            <hr color="#ABABAB">
+        </div>
+    </header>
+    <section class="profile">
+        <div class="container">
+            <h1>Личный кабинет</h1>
+            <div id="user-info">
+                <p><strong>Имя:</strong> <span id="user-name"></span></p>
+                <p><strong>Email:</strong> <span id="user-email"></span></p>
+            </div>
+            <form id="change-password-form">
+                <h2>Сменить пароль</h2>
+                <p>
+                    <label for="new-password">Новый пароль:</label>
+                    <input type="password" id="new-password" required>
+                </p>
+                <p>
+                    <label for="confirm-new-password">Подтвердите новый пароль:</label>
+                    <input type="password" id="confirm-new-password" required>
+                </p>
+                <button type="submit">Сменить пароль</button>
+            </form>
+            <a href="#" id="logout-link">Выйти</a>
+        </div>
+    </section>
+    <footer class="footer" id="footer">
+        <div class="container">
+            <div class="footer__wrapper">
+                <div class="footer__logo-wrapper">
+                    <div class="footer__logo">
+                        <img src="./img/logo.svg" alt="logo">
+                        <p>TRAVEL.guide</p>
+                    </div>
+                    <div class="footer__logo-text">
+                        <p>Мы специализируемся на туристических услугах и предлагаем уникальные путешествия по различным городам РФ. </p>
+                    </div>
+                </div>
+                <div class="footer__navigation">
+                    <div class="footer__service-list">
+                        <p>Сервис</p>
+                        <li>Консультация</li>
+                        <li>Поддержка</li>
+                        <li>Развитие</li>
+                    </div>
+                    <div class="footer__company-list">
+                        <p>Компания</p>
+                        <li>Услуги</li>
+                        <li>Особенности</li>
+                        <li>Блог</li>
+                        <li>Обратная связь</li>
+                    </div>
+                </div>
+            </div>
+            <hr color="#195581">
+            <div class="footer__copyright">
+                <p>Copyright <span>TRAVEL.guide</span></p>
+                <div class="footer__copyright-policy">
+                    <p>Terms of Service</p>
+                    <p>Privacy Policy</p>
+                    <p>Cookies</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="./js/profile.js" defer></script>
+</body>
+</html>

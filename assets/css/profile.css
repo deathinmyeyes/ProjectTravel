@@ -1,0 +1,282 @@
+@charset "UTF-8";
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+  transition: background-color ease 0.1s;
+}
+
+@font-face {
+  font-family: Poppins;
+  src: url(../fonts/Poppins-Regular.ttf);
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+body {
+  transition: background-color 0.1s ease;
+}
+
+a {
+  text-decoration: none;
+}
+
+ul, li {
+  list-style: none;
+}
+
+.container {
+  width: 1440px;
+  padding: 0 20px;
+  margin: 0 auto;
+}
+
+.header {
+  margin-bottom: 50px;
+  opacity: 0;
+  animation: fadeIn 1.5s forwards;
+}
+.header__wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.header__logo {
+  display: flex;
+  gap: 5px;
+}
+.header__logo h2 {
+  margin-top: 40px;
+  color: #000;
+}
+.header__list {
+  margin-left: -90px;
+  margin-top: 20px;
+  display: flex;
+  gap: 60px;
+  font-size: 20px;
+}
+.header__list li {
+  display: flex;
+}
+.header__list li a {
+  font-weight: 400;
+  color: #000;
+  transition: scale ease-in-out 0.25s;
+}
+.header__list li a:hover {
+  font-weight: bold;
+  cursor: pointer;
+  scale: 0.9;
+}
+.header__button {
+  margin-top: 20px;
+  float: right;
+  display: flex;
+}
+.header__button button {
+  width: 36px;
+  height: 36px;
+  font-size: 20px;
+  background-color: #fff;
+  margin-right: 20px;
+  display: block;
+  cursor: pointer;
+  border-radius: 5px 50% 50% 5px;
+}
+.header__button button::after {
+  content: "☀";
+}
+.header__button a {
+  background-color: #195581;
+  padding: 8px 29px;
+  border-radius: 6px;
+  color: #fff;
+}
+.header__button a:hover {
+  font-weight: 600;
+  background-color: #1486D9;
+}
+.header__burger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+}
+.header__burger .burger__line {
+  width: 25px;
+  height: 3px;
+  background-color: #333;
+  margin: 4px 0;
+}
+
+.profile {
+  padding: 40px 0;
+}
+.profile .container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.profile h1 {
+  font-size: 2.5rem;
+  color: #195581;
+  text-align: center;
+  margin-bottom: 20px;
+}
+.profile #user-info {
+  margin-bottom: 30px;
+}
+.profile #user-info p {
+  font-size: 1.2rem;
+  color: #333;
+  margin: 10px 0;
+}
+.profile #user-info p strong {
+  color: #195581;
+}
+.profile #change-password-form {
+  margin-bottom: 30px;
+}
+.profile #change-password-form h2 {
+  font-size: 1.8rem;
+  color: #195581;
+  margin-bottom: 20px;
+}
+.profile #change-password-form p {
+  margin: 15px 0;
+}
+.profile #change-password-form p label {
+  display: block;
+  font-size: 1rem;
+  color: #333;
+  margin-bottom: 5px;
+}
+.profile #change-password-form p input[type=password] {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #E0E0E0;
+  border-radius: 5px;
+  outline: none;
+}
+.profile #change-password-form p input[type=password]:focus {
+  border-color: #195581;
+}
+.profile #change-password-form button {
+  background-color: #195581;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.profile #change-password-form button:hover {
+  background-color: #1486D9;
+}
+.profile #logout-link {
+  display: inline-block;
+  color: #195581;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+}
+.profile #logout-link:hover {
+  color: #1486D9;
+}
+
+.footer {
+  animation: fadeIn 1.5s;
+  background-color: #F6F6F6;
+  width: 100%;
+  height: 520px;
+  margin-top: 150px;
+}
+.footer__wrapper {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 100px;
+}
+.footer__logo {
+  margin-top: 40px;
+  display: flex;
+  gap: 5px;
+}
+.footer__logo p {
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 40px;
+}
+.footer__logo-text {
+  width: 218px;
+  color: #3D3D3D;
+  font-size: 16px;
+  margin-top: 20px;
+}
+.footer__navigation {
+  display: flex;
+  gap: 80px;
+  margin-top: 100px;
+  font-size: 16px;
+}
+.footer__service-list p {
+  color: #195581;
+  font-weight: bold;
+}
+.footer__service-list li {
+  color: #3D3D3D;
+  margin-top: 10px;
+  cursor: pointer;
+  transition: all ease-in-out 0.2s;
+}
+.footer__service-list li:hover {
+  transform: scale(1.05);
+  opacity: 0.85;
+}
+.footer__company-list p {
+  color: #195581;
+  font-weight: bold;
+}
+.footer__company-list li {
+  color: #3D3D3D;
+  margin-top: 10px;
+  cursor: pointer;
+  transition: all ease-in-out 0.2s;
+}
+.footer__company-list li:hover {
+  transform: scale(1.05);
+  opacity: 0.85;
+}
+.footer__copyright {
+  margin-top: 40px;
+  display: flex;
+  justify-content: space-between;
+}
+.footer__copyright p {
+  font-size: 16px;
+}
+.footer__copyright p span {
+  font-weight: bold;
+}
+.footer__copyright-policy {
+  display: flex;
+  gap: 40px;
+}
+.footer__copyright-policy p {
+  font-size: 14px;
+  transition: all ease-in-out 0.2s;
+  cursor: pointer;
+}
+.footer__copyright-policy p:hover {
+  transform: scale(1.05);
+  opacity: 0.85;
+}/*# sourceMappingURL=profile.css.map */

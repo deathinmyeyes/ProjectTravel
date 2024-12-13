@@ -81,6 +81,7 @@ ul, li {
 }
 .header__logo h2 {
   margin-top: 40px;
+  color: #000;
 }
 .header__list {
   margin-left: -90px;

@@ -1,338 +1,318 @@
-const dataContainer = document.getElementById('data');
-const searchInput = document.getElementById('searchInput');
-const loader = document.createElement('div');
-const dropDown = document.getElementById('dropdown');
-const wrapper = document.getElementById('wrapper');
-const header = document.getElementById('header');
-const footer = document.getElementById('footer');
-const paginationContainer = document.getElementById('pagination');
-const filterBlock = document.getElementById('filters');
-const detailsContainer = document.getElementById('details');
-const gallery = document.getElementById('gallery');
-const galleryImage = document.getElementById('galleryImage');
-const sortByCategoryBtn = document.getElementById('sortByCategory');
-const sortByRatingBtn = document.getElementById('sortByRating');
-const filterByDistrictSelect = document.getElementById('filterByDistrict');
-const filterByTypeSelect = document.getElementById('filterByType')
-
-
-let allData = [];
-let currentPage = 1;
-let currentImageIndex = 0;
-let itemsPerPage = 10;
-let sortBy = '';
-let order = '';
-let filterByDistrict = '';
-let filterByType = '';
-
-loader.id = 'loader';
-filterBlock.className = 'route__filter-block';
-loader.innerHTML = "<img src='./img/25.gif' alt='loader'></img>";
-dataContainer.appendChild(loader);
-
-function fetchData(page, sortBy = '', order = '', filterByDistrict = '', filterByType = '', searchTerm = '') {
-  if (!dataContainer.contains(loader)) {
-    dataContainer.appendChild(loader);
+class DataManager {
+  constructor() {
+    this.allData = [];
+    this.currentPage = 1;
+    this.itemsPerPage = 10;
+    this.sortBy = '';
+    this.order = '';
+    this.filterByDistrict = '';
+    this.filterByType = '';
   }
 
-  searchInput.style.display = 'none';
-  dropDown.style.display = 'none';
-  header.style.display = 'none';
-  footer.style.display = 'none';
-  filterBlock.style.display = 'none';
-  paginationContainer.style.display = 'none';
-  reviewForm.style.display = 'none';
-  reviewsContainer.style.display = 'none';
+  async fetchData(page, sortBy = '', order = '', filterByDistrict = '', filterByType = '', searchTerm = '', isPagination = false) {
+    const urlParams = new URLSearchParams();
+    urlParams.append('page', page);
+    urlParams.append('limit', this.itemsPerPage);
 
-  const urlParams = new URLSearchParams();
-  urlParams.append('page', page);
-  urlParams.append('limit', itemsPerPage);
-  if (sortBy && order) {
-    urlParams.append('sortBy', sortBy);
-    urlParams.append('order', order);
-  }
-  if (filterByDistrict) {
-    urlParams.append('district', filterByDistrict);
-  }
-  if (filterByType) {
-    urlParams.append('type', filterByType);
-  }
-  if (searchTerm) {
-    urlParams.append('search', searchTerm);
-  }
+    if (sortBy && order) {
+      urlParams.append('sortBy', sortBy);
+      urlParams.append('order', order);
+    }
+    if (filterByDistrict) {
+      urlParams.append('district', encodeURIComponent(filterByDistrict));
+    }
+    if (filterByType) {
+      urlParams.append('type', encodeURIComponent(filterByType));
+    }
+    if (searchTerm) {
+      urlParams.append('search', encodeURIComponent(searchTerm));
+    }
 
-  const url = `https://672b170d976a834dd0258e17.mockapi.io/api/v1/tourism?${urlParams.toString()}`;
+    const url = `https://672b170d976a834dd0258e17.mockapi.io/api/v1/tourism?${urlParams.toString()}`;
 
-  fetch(url)
-    .then(response => response.json())
-    .then(data => {
-      dataContainer.style.display = 'block';
-      searchInput.style.display = 'block';
-      dropDown.style.display = 'block';
-      header.style.display = 'block';
-      footer.style.display = 'block';
-      filterBlock.style.display = 'block';
-      paginationContainer.style.display = 'flex';
-      reviewForm.style.display = 'flex';
-      reviewsContainer.style.display = 'block';
+    try {
+      console.log('URL:', url); 
+
+      UI.showLoader();
+      UI.hideData();
+
+      const response = await fetch(url);
+
+      if (!response.ok) {
+        throw new Error(`Ошибка загрузки данных: ${response.status} ${response.statusText}`);
+      }
+
+      const data = await response.json();
+
+      UI.showData();
+      UI.hideLoader();
 
       if (data.length > 0) {
-        allData = data;
-        displayData(allData);
+        this.allData = data;
+        UI.displayData(this.allData); 
 
-        if (dataContainer.contains(loader)) {
-          dataContainer.removeChild(loader);
+        if (isPagination) {
+          UI.scrollToPagination();
         }
-
-        setTimeout(() => {
-          dropDown.classList.add('show');
-        }, 10);
       } else {
-        currentPage = currentPage - 1;
-        fetchData(currentPage, sortBy, order, filterByDistrict, filterByType, searchTerm);
+        this.currentPage--;
+        await this.fetchData(this.currentPage, sortBy, order, filterByDistrict, filterByType, searchTerm, isPagination);
       }
-    })
-    .catch(error => {
-      if (dataContainer.contains(loader)) {
-        dataContainer.removeChild(loader);
-      }
+      return data; 
+    } catch (error) {
       console.error('Ошибка загрузки данных', error);
-    });
-}
-
-function displayData(data) {
-  dataContainer.innerHTML = '';
-  data.forEach((item) => {
-    const itemElement = document.createElement("div");
-    itemElement.className = 'route__card';
-    itemElement.innerHTML = `
-      <img src="${item.image}" alt="Image"></img>
-      <h2>${item.name}</h2>
-      <p>${item.description}</p>
-      <a href="#" onclick="openDetailsWindow(${item.id})">Подробнее</a>
-    `;
-    dataContainer.appendChild(itemElement);
-    setTimeout(() => {
-      itemElement.classList.add('visible');
-    }, 50);
-  });
-  updatePagination(data.length > 0);
-}
-
-function updatePagination(hasItems) {
-  paginationContainer.innerHTML = '';
-
-  if (currentPage > 1) {
-    const prevPageButton = document.createElement('button');
-    prevPageButton.className = 'route__pagination-pBtn';
-    prevPageButton.textContent = '<';
-    prevPageButton.addEventListener('click', () => {
-      currentPage--;
-      fetchData(currentPage, sortBy, order, filterByDistrict, filterByType);
-    });
-    paginationContainer.appendChild(prevPageButton);
-  }
-
-  const paginationCount = document.createElement('p')
-  paginationCount.textContent = `${currentPage}`;
-  paginationCount.style.fontSize = '20px';
-  paginationContainer.appendChild(paginationCount);
-
-  if (hasItems) {
-    const nextPageButton = document.createElement('button');
-    nextPageButton.className = 'route__pagination-nBtn';
-    nextPageButton.textContent = '>';
-    nextPageButton.addEventListener('click', () => {
-      currentPage++;
-      fetchData(currentPage, sortBy, order, filterByDistrict, filterByType);
-    });
-    paginationContainer.appendChild(nextPageButton);
-  } 
-}
-
-searchInput.addEventListener('keydown', (event) => {
-  if (event.key === 'Enter') {
-    const searchTerm = searchInput.value.toLowerCase();
-    currentPage = 1; 
-    fetchData(currentPage, sortBy, order, filterByDistrict, filterByType, searchTerm);
-  }
-});
-
-searchInput.addEventListener('blur', () => {
-  const searchTerm = searchInput.value.toLowerCase();
-  currentPage = 1; 
-  fetchData(currentPage, sortBy, order, filterByDistrict, filterByType, searchTerm);
-});
-
-function myFunction() {
-  document.getElementById("myDropdown").classList.toggle("show");
-} 
-
-searchInput.addEventListener('keydown', (event) => {
-  if (event.key === 'Enter') {
-    const searchTerm = searchInput.value.toLowerCase();
-    currentPage = 1; 
-    fetchData(currentPage, sortBy, order, filterByDistrict, filterByType, searchTerm);
-  }
-});
-
-searchInput.addEventListener('blur', () => {
-  const searchTerm = searchInput.value.toLowerCase();
-  currentPage = 1; 
-  fetchData(currentPage, sortBy, order, filterByDistrict, filterByType, searchTerm);
-});
-
-sortByCategoryBtn.addEventListener('click', () => {
-  sortBy = 'category';
-  order = 'asc';
-  currentPage = 1; 
-  fetchData(currentPage, sortBy, order, filterByDistrict, filterByType);
-});
-
-sortByRatingBtn.addEventListener('click', () => {
-  sortBy = 'rating';
-  order = 'desc';
-  currentPage = 1; 
-  fetchData(currentPage, sortBy, order, filterByDistrict, filterByType);
-});
-
-filterByDistrictSelect.addEventListener('change', () => {
-  filterByDistrict = filterByDistrictSelect.value;
-  currentPage = 1; 
-  fetchData(currentPage, sortBy, order, filterByDistrict, filterByType);
-});
-
-filterByTypeSelect.addEventListener('change', () => {
-  filterByType = filterByTypeSelect.value;
-  currentPage = 1; 
-  fetchData(currentPage, sortBy, order, filterByDistrict, filterByType);
-});
-
-function openDetailsWindow(itemId) {
-  event.preventDefault(); 
-  history.pushState({ id: itemId }, '', `./#route/${itemId}`); 
-  showDetails(itemId); 
-
-  saveToHistory(itemId);
-}
-
-window.addEventListener('popstate', (event) => {
-  if (event.state && event.state.id) {
-    showDetails(event.state.id); 
-  } else {
-    fetchData(currentPage);
-  }
-});
-
-window.onload = async () => {
-  const path = window.location.pathname; 
-  const parts = path.split('/'); 
-
-  if (parts[1] === 'route' && parts[2]) {
-    const routeId = parseInt(parts[2], 10); 
-    if (!isNaN(routeId)) {
-      showDetails(routeId); 
-    } else {
-      alert('Неверный идентификатор маршрута');
+      UI.showData(); 
+      UI.hideLoader(); 
+      return []; 
     }
-  } else {
-    fetchData(currentPage);
-  }
-};
-
-async function saveToHistory(itemId) {
-  let history = JSON.parse(localStorage.getItem('searchHistory')) || [];
-  const existingItem = history.find(item => item.id === itemId);
-  const attractions = await fetchAttractions();
-  const attraction = attractions.find(a => a.id === itemId);
-
-  if (!attraction) {
-    console.error('Маршрут не найден');
-    return;
   }
 
-  if (existingItem) {
-    existingItem.timestamp = new Date().toISOString();
-  } else {
-    history.push({
-      id: itemId,
-      name: attraction.name, 
-      timestamp: new Date().toISOString()
+  async checkNextPage() {
+    const nextPage = this.currentPage + 1;
+    const urlParams = new URLSearchParams();
+    urlParams.append('page', nextPage);
+    urlParams.append('limit', this.itemsPerPage);
+
+    const url = `https://672b170d976a834dd0258e17.mockapi.io/api/v1/tourism?${urlParams.toString()}`;
+
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`Ошибка проверки следующей страницы: ${response.status} ${response.statusText}`);
+      }
+      const data = await response.json();
+      return data.length > 0;
+    } catch (error) {
+      console.error('Ошибка проверки следующей страницы', error);
+      return false; 
+    }
+  }
+}
+
+class UI {
+  static init() {
+    this.dataContainer = document.getElementById('data');
+    this.searchInput = document.getElementById('searchInput');
+    this.dropDown = document.getElementById('dropdown');
+    this.paginationContainer = document.getElementById('pagination');
+    this.filterBlock = document.getElementById('filters');
+    this.detailsContainer = document.getElementById('details');
+    this.gallery = document.getElementById('gallery');
+    this.galleryImage = document.getElementById('galleryImage');
+    this.sortByCategoryBtn = document.getElementById('sortByCategory');
+    this.sortByRatingBtn = document.getElementById('sortByRating');
+    this.filterByDistrictSelect = document.getElementById('filterByDistrict');
+    this.filterByTypeSelect = document.getElementById('filterByType');
+    this.loader = document.getElementById('loader'); 
+
+    if (!this.loader) {
+      console.error('Элемент loader не найден в DOM');
+    }
+
+    this.searchInput.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter') {
+        const searchTerm = this.searchInput.value.toLowerCase();
+        dataManager.currentPage = 1;
+        dataManager.fetchData(dataManager.currentPage, dataManager.sortBy, dataManager.order, dataManager.filterByDistrict, dataManager.filterByType, searchTerm);
+      }
+    });
+
+    this.sortByCategoryBtn.addEventListener('click', () => {
+      dataManager.sortBy = 'category';
+      dataManager.order = 'asc';
+      dataManager.currentPage = 1;
+      dataManager.fetchData(dataManager.currentPage, dataManager.sortBy, dataManager.order, dataManager.filterByDistrict, dataManager.filterByType);
+    });
+
+    this.sortByRatingBtn.addEventListener('click', () => {
+      dataManager.sortBy = 'rating';
+      dataManager.order = 'desc';
+      dataManager.currentPage = 1;
+      dataManager.fetchData(dataManager.currentPage, dataManager.sortBy, dataManager.order, dataManager.filterByDistrict, dataManager.filterByType);
+    });
+
+    this.filterByDistrictSelect.addEventListener('change', () => {
+      dataManager.filterByDistrict = this.filterByDistrictSelect.value;
+      dataManager.currentPage = 1;
+      dataManager.fetchData(dataManager.currentPage, dataManager.sortBy, dataManager.order, dataManager.filterByDistrict, dataManager.filterByType);
+    });
+
+    this.filterByTypeSelect.addEventListener('change', () => {
+      dataManager.filterByType = this.filterByTypeSelect.value;
+      dataManager.currentPage = 1;
+      dataManager.fetchData(dataManager.currentPage, dataManager.sortBy, dataManager.order, dataManager.filterByDistrict, dataManager.filterByType);
     });
   }
 
-  localStorage.setItem('searchHistory', JSON.stringify(history));
-}
-
-
-async function fetchAttractions() {
-  const response = await fetch('https://672b170d976a834dd0258e17.mockapi.io/api/v1/tourism');
-  return response.json();
-}
-
-function openGallery(images, index) {
-  const gallery = document.getElementById('gallery');
-  const galleryImage = document.getElementById('galleryImage');
-  currentImageIndex = index;
-  galleryImage.src = images[currentImageIndex];
-  gallery.classList.add('show');
-}
-
-function closeGallery() {
-  const gallery = document.getElementById('gallery');
-  gallery.classList.remove('show');
-}
-
-function prevImage() {
-  const galleryImage = document.getElementById('galleryImage');
-  const images = Array.from(document.querySelectorAll('.route__details-wrapper img')).map(img => img.src);
-  currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
-  galleryImage.src = images[currentImageIndex];
-}
-
-function nextImage() {
-  const galleryImage = document.getElementById('galleryImage');
-  const images = Array.from(document.querySelectorAll('.route__details-wrapper img')).map(img => img.src);
-  currentImageIndex = (currentImageIndex + 1) % images.length;
-  galleryImage.src = images[currentImageIndex];
-}
-
-async function showDetails(attractionId) {
-  try {
-    const attractions = await fetchAttractions(); 
-    const attraction = attractions.find(a => a.id === attractionId);
-
-    if (attraction) {
-      searchInput.style.display = 'none';
-      dropDown.style.display = 'none';
-      paginationContainer.style.display = 'none';
-      filterBlock.style.display = 'none';
-      dataContainer.style.display = 'none';
-      document.getElementById('change_theme').style.display = 'none';
-      detailsContainer.style.display = 'block';
-
-      detailsContainer.innerHTML = `
-        <h2>${attraction.name}</h2>
-        <div class='route__details-wrapper'>
-          <p>${attraction.descriptions[0]}</p>
-          <img src="${attraction.images[0]}" alt="Image" onclick="openGallery([${attraction.images.map(img => `'${img}'`)}], 0)">
-        </div>
-        <div class='route__details-wrapper'>
-          <img src="${attraction.images[1]}" alt="Image" onclick="openGallery([${attraction.images.map(img => `'${img}'`)}], 1)">
-          <p>${attraction.descriptions[1]}</p>
-        </div>
-        <h2>Мы на карте</h2>
-        ${attraction.location}
+  static displayData(data) {
+    this.dataContainer.innerHTML = '';
+    data.forEach((item) => {
+      const itemElement = document.createElement("div");
+      itemElement.className = 'route__card';
+      itemElement.innerHTML = `
+        <img src="${item.image}" alt="Image"></img>
+        <h2>${item.name}</h2>
+        <p>${item.description}</p>
+        <a href="#" onclick="Details.showDetails(${item.id})">Подробнее</a>
       `;
-      detailsContainer.classList.remove('hidden');
+      this.dataContainer.appendChild(itemElement);
+      setTimeout(() => {
+        itemElement.classList.add('visible');
+      }, 50);
+    });
+    Pagination.updatePagination(data.length > 0);
+  }
+
+  static toggleDropdown() {
+    document.getElementById("myDropdown").classList.toggle("show");
+  }
+
+  static showLoader() {
+    if (this.loader) {
+      this.loader.style.display = 'flex'; 
     } else {
-      alert('Достопримечательность не найдена');
+      console.error('Элемент loader не найден в DOM');
     }
-  } catch (error) {
-    console.error('Ошибка при загрузке данных:', error);
-    alert('Произошла ошибка при загрузке данных');
+  }
+
+  static hideLoader() {
+    if (this.loader) {
+      this.loader.style.display = 'none'; 
+    } else {
+      console.error('Элемент loader не найден в DOM');
+    }
+  }
+
+  static hideData() {
+    this.dataContainer.style.display = 'none'; 
+  }
+
+  static showData() {
+    this.dataContainer.style.display = 'block'; 
+  }
+
+  static scrollToPagination() {
+    if (this.paginationContainer) {
+      this.paginationContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
   }
 }
+
+class Pagination {
+  static async updatePagination(hasItems) {
+    const paginationContainer = document.getElementById('pagination');
+    paginationContainer.innerHTML = '';
+
+    if (dataManager.currentPage > 1) {
+      const prevPageButton = document.createElement('button');
+      prevPageButton.className = 'route__pagination-pBtn';
+      prevPageButton.textContent = '<';
+      prevPageButton.addEventListener('click', () => {
+        dataManager.currentPage--;
+        dataManager.fetchData(dataManager.currentPage, dataManager.sortBy, dataManager.order, dataManager.filterByDistrict, dataManager.filterByType, '', true); 
+      });
+      paginationContainer.appendChild(prevPageButton);
+    }
+
+    const paginationCount = document.createElement('p');
+    paginationCount.textContent = `${dataManager.currentPage}`;
+    paginationCount.style.fontSize = '20px';
+    paginationContainer.appendChild(paginationCount);
+
+    const hasNextPage = await dataManager.checkNextPage();
+
+    if (hasItems && hasNextPage) {
+      const nextPageButton = document.createElement('button');
+      nextPageButton.className = 'route__pagination-nBtn';
+      nextPageButton.textContent = '>';
+      nextPageButton.addEventListener('click', () => {
+        dataManager.currentPage++;
+        dataManager.fetchData(dataManager.currentPage, dataManager.sortBy, dataManager.order, dataManager.filterByDistrict, dataManager.filterByType, '', true); 
+      });
+      paginationContainer.appendChild(nextPageButton);
+    }
+  }
+}
+
+class Details {
+  static async showDetails(attractionId) {
+    try {
+      const attractions = await dataManager.fetchData(1); 
+      const attraction = attractions.find(a => a.id === attractionId);
+
+      if (attraction) {
+        UI.searchInput.style.display = 'none';
+        UI.dropDown.style.display = 'none';
+        UI.paginationContainer.style.display = 'none';
+        UI.filterBlock.style.display = 'none';
+        UI.dataContainer.style.display = 'none';
+        UI.detailsContainer.style.display = 'block';
+
+        UI.detailsContainer.innerHTML = `
+          <h2>${attraction.name}</h2>
+          <div class='route__details-wrapper'>
+            <p>${attraction.descriptions[0]}</p>
+            <img src="${attraction.images[0]}" alt="Image" onclick="Gallery.openGallery([${attraction.images.map(img => `'${img}'`)}], 0)">
+          </div>
+          <div class='route__details-wrapper'>
+            <img src="${attraction.images[1]}" alt="Image" onclick="Gallery.openGallery([${attraction.images.map(img => `'${img}'`)}], 1)">
+            <p>${attraction.descriptions[1]}</p>
+          </div>
+          <h2>Мы на карте</h2>
+          ${attraction.location}
+        `;
+        UI.detailsContainer.classList.remove('hidden');
+      } else {
+        alert('Достопримечательность не найдена');
+      }
+    } catch (error) {
+      console.error('Ошибка при загрузке данных:', error);
+      alert('Произошла ошибка при загрузке данных');
+    }
+  }
+}
+
+class Gallery {
+  static currentImageIndex = 0;
+
+  static openGallery(images, index) {
+    const gallery = document.getElementById('gallery');
+    const galleryImage = document.getElementById('galleryImage');
+    this.currentImageIndex = index;
+    galleryImage.src = images[this.currentImageIndex];
+    gallery.classList.add('show');
+  }
+
+  static closeGallery() {
+    const gallery = document.getElementById('gallery');
+    gallery.classList.remove('show');
+  }
+
+  static prevImage() {
+    const galleryImage = document.getElementById('galleryImage');
+    const images = Array.from(document.querySelectorAll('.route__details-wrapper img')).map(img => img.src);
+    this.currentImageIndex = (this.currentImageIndex - 1 + images.length) % images.length;
+    galleryImage.src = images[this.currentImageIndex];
+  }
+
+  static nextImage() {
+    const galleryImage = document.getElementById('galleryImage');
+    const images = Array.from(document.querySelectorAll('.route__details-wrapper img')).map(img => img.src);
+    this.currentImageIndex = (this.currentImageIndex + 1) % images.length;
+    galleryImage.src = images[this.currentImageIndex];
+  }
+}
+
+window.openGallery = Gallery.openGallery.bind(Gallery);
+window.closeGallery = Gallery.closeGallery.bind(Gallery);
+window.prevImage = Gallery.prevImage.bind(Gallery);
+window.nextImage = Gallery.nextImage.bind(Gallery);
+
+const dataManager = new DataManager();
+document.addEventListener('DOMContentLoaded', () => {
+  UI.init();
+  dataManager.fetchData(dataManager.currentPage);
+});
 
 class BurgerMenu {
   constructor(burgerId, wrapperClass, inputWrapperClass) {

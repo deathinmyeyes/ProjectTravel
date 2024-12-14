@@ -251,10 +251,11 @@ ul, li {
         }
     }
 
-    &__filter-block {
-        text-align: center;
+    #filters {
         margin-bottom: 50px;
         display: flex;
+        justify-content: center;
+        gap: 20px;
 
         select {
             height: 50px;
@@ -700,12 +701,16 @@ ul, li {
 }
 
 #loader {
-    animation: fadeIn 0.2s ease;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    background-color: $dark_bg;
+    height: 100vh; 
+    width: 100vw; 
+    background-color: $dark_bg; 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    z-index: 1000; 
     img {
         scale: 1.5;
         filter: invert(.93);

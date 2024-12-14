@@ -39,61 +39,61 @@
     </header>
     <section class="route">
         <div id="route_wrap">
-            <div class="route__functional">
-                <div class="route__input-wrapper">
-                    <input type="text" id="searchInput" placeholder="Поиск...">
-                </div>
-                <div id="filters">
-                    <select id="filterByDistrict">
-                        <option value="">Выберите район</option>
-                        <option value="Калининский">Калининский</option>
-                        <option value="Центральный">Центральный</option>
-                        <option value="Курчатовский">Курчатовский</option>
-                        <option value="Ленинский">Ленинский</option>
-                    </select>
-                    <select id="filterByType">
-                        <option value="">Выберите тип</option>
-                        <option value="Завод">Завод</option>
-                        <option value="Театр">Театр</option>
-                        <option value="Зоопарк">Зоопарк</option>
-                        <option value="Музей">Музей</option>
-                    </select>
-                </div>
-                <div class="route__dropdown" id="dropdown">                        
-                    <button onclick="myFunction()" class="route__dropbtn">Сортировка</button>
-                    <div id="myDropdown" class="route__dropdown-content">
-                        <button id="sortByCategory">По категории</button>
-                        <button id="sortByRating">По рейтингу</button>
-                    </div>
-                </div>
+          <div class="route__functional">
+            <div class="route__input-wrapper">
+              <input type="text" id="searchInput" placeholder="Поиск...">
             </div>
-            <div class="route__wrapper" id="data"></div>
-            <div class="route__pagination" id="pagination"></div>
-            <div id="details" class="route__details hidden">
-                <form id="reviewForm">
-                    <h1>Оставить отзыв</h1>
-                    <p>Введите имя:</p>
-                    <input type="text" id="reviewName" placeholder="Ваше имя" required>
-                    <p>Введите ваш отзыв:</p>
-                    <input id="reviewText" placeholder="Ваш отзыв" required></input>
-                    <p>Поставьте оценку:</p>
-                    <div class="rating">
-                        <span class="star" data-value="1">★</span>
-                        <span class="star" data-value="2">★</span>
-                        <span class="star" data-value="3">★</span>
-                        <span class="star" data-value="4">★</span>
-                        <span class="star" data-value="5">★</span>
-                    </div>
-                    <button type="submit">Оставить отзыв</button>
-                    <div class="stats">
-                        <p>Количество отзывов: <span id="totalReviews"></span></p>
-                        <p>Средняя оценка: <span id="averageRating"></span></p>
-                    </div>
-                </form>
-                <div id="reviewsContainer"></div>
+            <div id="filters">
+              <select id="filterByDistrict">
+                <option value="">Выберите район</option>
+                <option value="Калининский">Калининский</option>
+                <option value="Центральный">Центральный</option>
+                <option value="Курчатовский">Курчатовский</option>
+                <option value="Ленинский">Ленинский</option>
+              </select>
+              <select id="filterByType">
+                <option value="">Выберите тип</option>
+                <option value="Завод">Завод</option>
+                <option value="Театр">Театр</option>
+                <option value="Зоопарк">Зоопарк</option>
+                <option value="Музей">Музей</option>
+              </select>
             </div>
+            <div class="route__dropdown" id="dropdown">
+              <button onclick="UI.toggleDropdown()" class="route__dropbtn">Сортировка</button>
+              <div id="myDropdown" class="route__dropdown-content">
+                <button id="sortByCategory">По категории</button>
+                <button id="sortByRating">По рейтингу</button>
+              </div>
+            </div>
+          </div>
+          <div class="route__wrapper" id="data"></div>
+          <div class="route__pagination" id="pagination"></div>
+          <div id="details" class="route__details hidden">
+            <form id="reviewForm">
+              <h1>Оставить отзыв</h1>
+              <p>Введите имя:</p>
+              <input type="text" id="reviewName" placeholder="Ваше имя" required>
+              <p>Введите ваш отзыв:</p>
+              <input id="reviewText" placeholder="Ваш отзыв" required></input>
+              <p>Поставьте оценку:</p>
+              <div class="rating">
+                <span class="star" data-value="1">★</span>
+                <span class="star" data-value="2">★</span>
+                <span class="star" data-value="3">★</span>
+                <span class="star" data-value="4">★</span>
+                <span class="star" data-value="5">★</span>
+              </div>
+              <button type="submit">Оставить отзыв</button>
+              <div class="stats">
+                <p>Количество отзывов: <span id="totalReviews"></span></p>
+                <p>Средняя оценка: <span id="averageRating"></span></p>
+              </div>
+            </form>
+            <div id="reviewsContainer"></div>
+          </div>
         </div>
-    </section>
+      </section>
     <footer class="footer" id="footer">
         <div class="container">
             <div class="footer__wrapper">
@@ -139,6 +139,9 @@
         <button class="route__gallery-prev" onclick="prevImage()"><</button>
         <button class="route__gallery-next" onclick="nextImage()">></button>
     </div>  
+    <div id="loader" style="display: none;">
+        <img src="./img/25.gif" alt="loader">
+      </div>
     <script src="./js/route.js"></script>
 </body>
 </html>

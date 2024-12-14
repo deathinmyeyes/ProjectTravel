@@ -232,10 +232,11 @@ ul, li {
         }
     }
 
-    &__filter-block{
-        text-align: center;
+    #filters{
         margin-bottom: 50px;
         display: flex;
+        justify-content: center;
+        gap: 20px;
         
         select{
             height: 50px;
@@ -245,7 +246,7 @@ ul, li {
     }
 
     &__dropdown-content {
-        display: none;
+        display: none;  
         padding-top: 20px;
         z-index: 1;
 
@@ -667,12 +668,16 @@ ul, li {
 }
 
 #loader {
-    animation: fadeIn 0.2s ease;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    background-color: #fff;
+    height: 100vh; 
+    width: 100vw; 
+    background-color: #fff; 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    z-index: 1000; 
 
     img {
         scale: 1.5;

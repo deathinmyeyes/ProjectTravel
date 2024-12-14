@@ -43,7 +43,7 @@ class LoginForm {
       } else {
         const user = users.find(user => user.password === password);
         if (user) {
-          localStorage.setItem('user', JSON.stringify(user));
+          document.cookie = `user=${JSON.stringify(user)}; path=/; max-age=${60 * 60 * 24}`; 
           alert('Вы успешно вошли в свой аккаунт');
           window.location = './profile.html'; 
         } else {

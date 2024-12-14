@@ -566,8 +566,15 @@ class UserManager {
     this.profileLink = document.getElementById('profile-link');
   }
 
+  getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+  }
+
   checkUserStatus() {
-    const user = JSON.parse(localStorage.getItem('user'));
+    const userCookie = this.getCookie('user');
+    const user = userCookie ? JSON.parse(userCookie) : null;
 
     if (user) {
       this.loginLink.style.display = 'none';

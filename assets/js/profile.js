@@ -12,7 +12,7 @@ class ProfileManager {
     }
 
     loadUser() {
-        const userData = localStorage.getItem('user');
+        const userData = this.getCookie('user');
         if (userData) {
             this.user = JSON.parse(userData);
             this.displayUserInfo();
@@ -22,6 +22,19 @@ class ProfileManager {
         }
     }
 
+    getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+    }
+
+    setCookie(name, value, days) {
+        const date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        const expires = `expires=${date.toUTCString()}`;
+        document.cookie = `${name}=${value}; ${expires}; path=/`;
+    }
+
     displayUserInfo() {
         document.getElementById('user-name').textContent = this.user.name;
         document.getElementById('user-email').textContent = this.user.email;
@@ -29,7 +42,7 @@ class ProfileManager {
 
     bindEvents() {
         this.changePasswordForm.addEventListener('submit', this.handlePasswordChange.bind(this));
-        this.changeNameForm.addEventListener('submit', this.handleNameChange.bind(this)); 
+        this.changeNameForm.addEventListener('submit', this.handleNameChange.bind(this));
         this.logoutLink.addEventListener('click', this.handleLogout.bind(this));
     }
 
@@ -86,10 +99,10 @@ class ProfileManager {
 
             if (response.ok) {
                 alert('Имя успешно изменено');
-                this.user.name = newName; 
-                localStorage.setItem('user', JSON.stringify(this.user)); 
-                this.displayUserInfo(); 
-                this.updateNameOnMainPage(newName); 
+                this.user.name = newName;
+                this.setCookie('user', JSON.stringify(this.user), 1); 
+                this.displayUserInfo();
+                this.updateNameOnMainPage(newName);
                 this.changeNameForm.reset();
             } else {
                 alert('Ошибка при смене имени');
@@ -101,13 +114,14 @@ class ProfileManager {
     }
 
     updateNameOnMainPage(newName) {
-        localStorage.setItem('updatedName', newName);
+        this.setCookie('updatedName', newName, 1); 
     }
 
     handleLogout(event) {
         event.preventDefault();
 
-        localStorage.removeItem('user');
+        this.setCookie('user', '', -1); 
+        this.setCookie('updatedName', '', -1); 
 
         alert('Вы вышли из аккаунта');
         window.location = './index.html';

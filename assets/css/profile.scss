@@ -157,88 +157,126 @@ ul, li {
 }
 
 .profile {
-  padding: 40px 0;
-
-  .container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-
-  h1 {
-    font-size: 2.5rem;
-    color: $primary-color;
-    text-align: center;
-    margin-bottom: 20px;
-  }
-
-  #user-info {
-    margin-bottom: 30px;
-
-    p {
-      font-size: 1.2rem;
-      color: $text-color;
-      margin: 10px 0;
-
-      strong {
-        color: $primary-color;
-      }
+    padding: 40px 0;
+  
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
-  }
-
-  #change-password-form {
-    margin-bottom: 30px;
-
-    h2 {
-      font-size: 1.8rem;
+  
+    h1 {
+      font-size: 2.5rem;
       color: $primary-color;
+      text-align: center;
       margin-bottom: 20px;
     }
-
-    p {
-      margin: 15px 0;
-
-      label {
-        display: block;
-        font-size: 1rem;
+  
+    #user-info {
+      margin-bottom: 30px;
+  
+      p {
+        font-size: 1.2rem;
         color: $text-color;
-        margin-bottom: 5px;
-      }
-
-      input[type="password"] {
-        width: 100%;
-        padding: 10px;
-        font-size: 1rem;
-        border: 1px solid $border-color;
-        border-radius: 5px;
-        outline: none;
-
-        &:focus {
-          border-color: $primary-color;
+        margin: 10px 0;
+  
+        strong {
+          color: $primary-color;
         }
       }
     }
-
-    button {
-      @include button-style;
+  
+    #change-name-form {
+      margin-bottom: 30px;
+  
+      h2 {
+        font-size: 1.8rem;
+        color: $primary-color;
+        margin-bottom: 20px;
+      }
+  
+      p {
+        margin: 15px 0;
+  
+        label {
+          display: block;
+          font-size: 1rem;
+          color: $text-color;
+          margin-bottom: 5px;
+        }
+  
+        input[type="text"] {
+          width: 100%;
+          padding: 10px;
+          font-size: 1rem;
+          border: 1px solid $border-color;
+          border-radius: 5px;
+          outline: none;
+  
+          &:focus {
+            border-color: $primary-color;
+          }
+        }
+      }
+  
+      button {
+        @include button-style;
+      }
+    }
+  
+    #change-password-form {
+      margin-bottom: 30px;
+  
+      h2 {
+        font-size: 1.8rem;
+        color: $primary-color;
+        margin-bottom: 20px;
+      }
+  
+      p {
+        margin: 15px 0;
+  
+        label {
+          display: block;
+          font-size: 1rem;
+          color: $text-color;
+          margin-bottom: 5px;
+        }
+  
+        input[type="password"] {
+          width: 100%;
+          padding: 10px;
+          font-size: 1rem;
+          border: 1px solid $border-color;
+          border-radius: 5px;
+          outline: none;
+  
+          &:focus {
+            border-color: $primary-color;
+          }
+        }
+      }
+  
+      button {
+        @include button-style;
+      }
+    }
+  
+    #logout-link {
+      display: inline-block;
+      color: $button-color;
+      text-decoration: none;
+      font-size: 1rem;
+      transition: color 0.3s ease;
+  
+      &:hover {
+        color: $button-hover-color;
+      }
     }
   }
-
-  #logout-link {
-    display: inline-block;
-    color: $button-color;
-    text-decoration: none;
-    font-size: 1rem;
-    transition: color 0.3s ease;
-
-    &:hover {
-      color: $button-hover-color;
-    }
-  }
-}
 
 .footer {
     animation: fadeIn 1.5s;

@@ -2,6 +2,7 @@ class ProfileManager {
     constructor() {
         this.user = null;
         this.changePasswordForm = document.getElementById('change-password-form');
+        this.changeNameForm = document.getElementById('change-name-form');
         this.logoutLink = document.getElementById('logout-link');
     }
 
@@ -28,6 +29,7 @@ class ProfileManager {
 
     bindEvents() {
         this.changePasswordForm.addEventListener('submit', this.handlePasswordChange.bind(this));
+        this.changeNameForm.addEventListener('submit', this.handleNameChange.bind(this)); 
         this.logoutLink.addEventListener('click', this.handleLogout.bind(this));
     }
 
@@ -61,6 +63,45 @@ class ProfileManager {
             console.error('Ошибка:', error);
             alert('Произошла ошибка при смене пароля');
         }
+    }
+
+    async handleNameChange(event) {
+        event.preventDefault();
+
+        const newName = document.getElementById('new-name').value;
+
+        if (!newName) {
+            alert('Имя не может быть пустым');
+            return;
+        }
+
+        try {
+            const response = await fetch(`https://6752c922f3754fcea7b99892.mockapi.io/users/${this.user.id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ name: newName }),
+            });
+
+            if (response.ok) {
+                alert('Имя успешно изменено');
+                this.user.name = newName; 
+                localStorage.setItem('user', JSON.stringify(this.user)); 
+                this.displayUserInfo(); 
+                this.updateNameOnMainPage(newName); 
+                this.changeNameForm.reset();
+            } else {
+                alert('Ошибка при смене имени');
+            }
+        } catch (error) {
+            console.error('Ошибка:', error);
+            alert('Произошла ошибка при смене имени');
+        }
+    }
+
+    updateNameOnMainPage(newName) {
+        localStorage.setItem('updatedName', newName);
     }
 
     handleLogout(event) {

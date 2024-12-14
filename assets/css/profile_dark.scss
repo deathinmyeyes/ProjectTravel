@@ -162,7 +162,7 @@ ul, li {
   
     h1 {
       font-size: 2.5rem;
-      color: $base_color; 
+      color: $base_color;
       text-align: center;
       margin-bottom: 20px;
     }
@@ -177,6 +177,57 @@ ul, li {
   
         strong {
           color: $base_color; 
+        }
+      }
+    }
+  
+    #change-name-form {
+      margin-bottom: 30px;
+  
+      h2 {
+        font-size: 1.8rem;
+        color: $base_color; 
+        margin-bottom: 20px;
+      }
+  
+      p {
+        margin: 15px 0;
+  
+        label {
+          display: block;
+          font-size: 1rem;
+          color: $dark_text;  
+          margin-bottom: 5px;
+        }
+  
+        input[type="text"] {
+          width: 100%;
+          padding: 10px;
+          font-size: 1rem;
+          border: 1px solid $second_color; 
+          background-color: $dark_hover; 
+          color: $dark_text; 
+          border-radius: 5px;
+          outline: none;
+  
+          &:focus {
+            border-color: $base_color; 
+          }
+        }
+      }
+  
+      button {
+        background-color: $base_color; 
+        color: #fff; 
+        padding: 10px 20px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: background-color 0.3s ease;
+  
+        &:hover {
+          background-color: #d99114; 
         }
       }
     }
@@ -204,8 +255,8 @@ ul, li {
           width: 100%;
           padding: 10px;
           font-size: 1rem;
-          border: 1px solid $second_color;
-          background-color: $dark_hover;
+          border: 1px solid $second_color; 
+          background-color: $dark_hover; 
           color: $dark_text; 
           border-radius: 5px;
           outline: none;
@@ -217,7 +268,7 @@ ul, li {
       }
   
       button {
-        background-color: $base_color;
+        background-color: $base_color; 
         color: #fff; 
         padding: 10px 20px;
         border: none;
@@ -227,7 +278,7 @@ ul, li {
         transition: background-color 0.3s ease;
   
         &:hover {
-          background-color: #d99114;
+          background-color: #d99114; 
         }
       }
     }

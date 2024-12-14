@@ -245,7 +245,6 @@ async function showDetails(attractionId) {
     const attraction = attractions.find(a => a.id === attractionId);
 
     if (attraction) {
-      // Скрываем элементы интерфейса
       searchInput.style.display = 'none';
       dropDown.style.display = 'none';
       document.getElementById('checkbox').style.display = 'none';

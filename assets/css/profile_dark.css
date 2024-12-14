@@ -156,6 +156,49 @@ ul, li {
 .profile #user-info p strong {
   color: #a85900;
 }
+.profile #change-name-form {
+  margin-bottom: 30px;
+}
+.profile #change-name-form h2 {
+  font-size: 1.8rem;
+  color: #a85900;
+  margin-bottom: 20px;
+}
+.profile #change-name-form p {
+  margin: 15px 0;
+}
+.profile #change-name-form p label {
+  display: block;
+  font-size: 1rem;
+  color: #E0E0E0;
+  margin-bottom: 5px;
+}
+.profile #change-name-form p input[type=text] {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #3D3D3D;
+  background-color: #2A2A2A;
+  color: #E0E0E0;
+  border-radius: 5px;
+  outline: none;
+}
+.profile #change-name-form p input[type=text]:focus {
+  border-color: #a85900;
+}
+.profile #change-name-form button {
+  background-color: #a85900;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+.profile #change-name-form button:hover {
+  background-color: #d99114;
+}
 .profile #change-password-form {
   margin-bottom: 30px;
 }

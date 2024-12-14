@@ -6,8 +6,6 @@ const wrapper = document.getElementById('wrapper');
 const header = document.getElementById('header');
 const footer = document.getElementById('footer');
 const paginationContainer = document.getElementById('pagination');
-const filterByDistrictSelect = document.getElementById('filterByDistrict');
-const filterByTypeSelect = document.getElementById('filterByType');
 const filterBlock = document.getElementById('filters');
 const detailsContainer = document.getElementById('details');
 const gallery = document.getElementById('gallery');
@@ -335,27 +333,75 @@ window.onload = async () => {
   }
 };
 
-document.getElementById('burger').addEventListener('click', function () {
-  const wrapper = document.querySelector('.header__wrapper');
-  wrapper.classList.toggle('active');
-  if (wrapper.classList.contains('active')) {
-    document.querySelector('.route__input-wrapper').style.marginTop = '270px';
-  } else {
-    document.querySelector('.route__input-wrapper').style.marginTop = '0px';
+class BurgerMenu {
+  constructor(burgerId, wrapperClass, inputWrapperClass) {
+    this.burger = document.getElementById(burgerId);
+    this.wrapper = document.querySelector(wrapperClass);
+    this.inputWrapper = document.querySelector(inputWrapperClass);
+
+    if (!this.burger || !this.wrapper || !this.inputWrapper) {
+      console.error('Один или несколько элементов не найдены!');
+      return;
+    }
+
+    this.initEventListeners();
   }
-});
 
-filterByDistrictSelect.addEventListener('change', () => {
-  filterByDistrict = filterByDistrictSelect.value;
-  currentPage = 1;
-  fetchData(currentPage, sortBy, order, filterByDistrict, filterByType);
-});
+  initEventListeners() {
+    this.burger.addEventListener('click', () => this.toggleMenu());
+  }
 
-filterByTypeSelect.addEventListener('change', () => {
-  filterByType = filterByTypeSelect.value;
-  currentPage = 1;
-  fetchData(currentPage, sortBy, order, filterByDistrict, filterByType);
-});
+  toggleMenu() {
+    this.wrapper.classList.toggle('active');
+    if (this.wrapper.classList.contains('active')) {
+      this.inputWrapper.style.marginTop = '270px';
+    } else {
+      this.inputWrapper.style.marginTop = '0px';
+    }
+  }
+}
+
+const burgerMenu = new BurgerMenu('burger', '.header__wrapper', '.route__input-wrapper');
+
+class DataFilter {
+  constructor(filterByDistrictSelect, filterByTypeSelect) {
+    this.filterByDistrictSelect = filterByDistrictSelect;
+    this.filterByTypeSelect = filterByTypeSelect;
+    this.filterByDistrict = '';
+    this.filterByType = '';
+    this.currentPage = 1;
+    this.sortBy = '';
+    this.order = '';
+
+    this.initEventListeners();
+  }
+
+  initEventListeners() {
+    this.filterByDistrictSelect.addEventListener('change', () => this.handleDistrictChange());
+    this.filterByTypeSelect.addEventListener('change', () => this.handleTypeChange());
+  }
+
+  handleDistrictChange() {
+    this.filterByDistrict = this.filterByDistrictSelect.value;
+    this.currentPage = 1;
+    this.fetchData();
+  }
+
+  handleTypeChange() {
+    this.filterByType = this.filterByTypeSelect.value;
+    this.currentPage = 1;
+    this.fetchData();
+  }
+
+  fetchData() {
+    fetchData(this.currentPage, this.sortBy, this.order, this.filterByDistrict, this.filterByType);
+  }
+}
+
+const filterByDistrictSelect = document.getElementById('filterByDistrict');
+const filterByTypeSelect = document.getElementById('filterByType');
+
+const dataFilter = new DataFilter(filterByDistrictSelect, filterByTypeSelect);
 
 
 

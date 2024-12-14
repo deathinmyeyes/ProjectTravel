@@ -1,9 +1,14 @@
 $base_color: #a85900;
+$primary-color: #a85900;
+$button-color: #a85900;
 $second_color: #3D3D3D;
 $dark_bg: #121212; 
 $dark_text: #E0E0E0; 
+$text_color: #E0E0E0;
+$border-color: #3D3D3D;
 $dark_card_bg: #1E1E1E; 
 $dark_hover: #2A2A2A; 
+$button-hover-color: #fff;
 
 * {
     margin: 0;
@@ -26,6 +31,20 @@ $dark_hover: #2A2A2A;
         opacity: 1;
     }
 }
+
+@mixin button-style {
+    background-color: $base_color;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  
+    &:hover {
+      background-color: #fff;
+    }
+  }
 
 body {
     background-color: $dark_bg;
@@ -155,16 +174,31 @@ ul, li {
       max-width: 800px;
       margin: 0 auto;
       padding: 20px;
-      background-color: $dark_card_bg; 
+      background-color: $dark_card_bg;
       border-radius: 10px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1);
     }
   
     h1 {
       font-size: 2.5rem;
-      color: $base_color;
-      text-align: center;
+      color: $primary-color;
       margin-bottom: 20px;
+      text-align: center;
+    }
+
+    h2{
+        font-size: 2.5rem;
+        color: $primary-color;
+        margin-bottom: 20px;
+    }
+
+    #search-history{
+        margin-bottom: 30px;
+        li{
+            font-size: 1.2rem;
+            color: $text-color;
+            margin: 10px 0;
+        }
     }
   
     #user-info {
@@ -172,11 +206,11 @@ ul, li {
   
       p {
         font-size: 1.2rem;
-        color: $dark_text; 
+        color: $text-color;
         margin: 10px 0;
   
         strong {
-          color: $base_color; 
+          color: $primary-color;
         }
       }
     }
@@ -186,7 +220,7 @@ ul, li {
   
       h2 {
         font-size: 1.8rem;
-        color: $base_color; 
+        color: $primary-color;
         margin-bottom: 20px;
       }
   
@@ -196,7 +230,7 @@ ul, li {
         label {
           display: block;
           font-size: 1rem;
-          color: $dark_text;  
+          color: $text-color;
           margin-bottom: 5px;
         }
   
@@ -204,31 +238,20 @@ ul, li {
           width: 100%;
           padding: 10px;
           font-size: 1rem;
-          border: 1px solid $second_color; 
-          background-color: $dark_hover; 
-          color: $dark_text; 
+          border: 1px solid $border-color;
           border-radius: 5px;
           outline: none;
+          background-color: $dark_card_bg;
+          color: $dark_text;
   
           &:focus {
-            border-color: $base_color; 
+            border-color: $primary-color;
           }
         }
       }
   
       button {
-        background-color: $base_color; 
-        color: #fff; 
-        padding: 10px 20px;
-        border: none;
-        border-radius: 6px;
-        cursor: pointer;
-        font-size: 1rem;
-        transition: background-color 0.3s ease;
-  
-        &:hover {
-          background-color: #d99114; 
-        }
+        @include button-style;
       }
     }
   
@@ -237,7 +260,7 @@ ul, li {
   
       h2 {
         font-size: 1.8rem;
-        color: $base_color; 
+        color: $primary-color;
         margin-bottom: 20px;
       }
   
@@ -247,54 +270,49 @@ ul, li {
         label {
           display: block;
           font-size: 1rem;
-          color: $dark_text; 
+          color: $text-color;
           margin-bottom: 5px;
         }
   
         input[type="password"] {
-          width: 100%;
-          padding: 10px;
-          font-size: 1rem;
-          border: 1px solid $second_color; 
-          background-color: $dark_hover; 
-          color: $dark_text; 
-          border-radius: 5px;
-          outline: none;
-  
-          &:focus {
-            border-color: $base_color; 
-          }
+            width: 100%;
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid $border-color;
+            border-radius: 5px;
+            outline: none;
+            background-color: $dark_card_bg;
+            color: $dark_text;
+    
+            &:focus {
+              border-color: $primary-color;
+            }
         }
       }
   
       button {
-        background-color: $base_color; 
-        color: #fff; 
-        padding: 10px 20px;
-        border: none;
-        border-radius: 6px;
-        cursor: pointer;
-        font-size: 1rem;
-        transition: background-color 0.3s ease;
-  
-        &:hover {
-          background-color: #d99114; 
-        }
+        @include button-style;
       }
     }
   
+    #clear-history{
+        margin-bottom: 30px;
+        @include button-style;
+    }
+
     #logout-link {
       display: inline-block;
-      color: $base_color; 
+      color: $button-color;
       text-decoration: none;
       font-size: 1rem;
       transition: color 0.3s ease;
   
       &:hover {
-        color: #d99114; 
+        color: $button-hover-color;
       }
     }
   }
+
 
 .footer {
     animation: fadeIn 1.5s;

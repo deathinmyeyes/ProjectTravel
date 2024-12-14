@@ -129,8 +129,21 @@ ul, li {
 .profile h1 {
   font-size: 2.5rem;
   color: #195581;
-  text-align: center;
   margin-bottom: 20px;
+  text-align: center;
+}
+.profile h2 {
+  font-size: 2.5rem;
+  color: #195581;
+  margin-bottom: 20px;
+}
+.profile #search-history {
+  margin-bottom: 30px;
+}
+.profile #search-history li {
+  font-size: 1.2rem;
+  color: #333;
+  margin: 10px 0;
 }
 .profile #user-info {
   margin-bottom: 30px;
@@ -221,6 +234,19 @@ ul, li {
   transition: background-color 0.3s ease;
 }
 .profile #change-password-form button:hover {
+  background-color: #1486D9;
+}
+.profile #clear-history {
+  margin-bottom: 30px;
+  background-color: #195581;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.profile #clear-history:hover {
   background-color: #1486D9;
 }
 .profile #logout-link {

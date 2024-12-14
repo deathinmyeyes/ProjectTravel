@@ -171,8 +171,23 @@ ul, li {
     h1 {
       font-size: 2.5rem;
       color: $primary-color;
-      text-align: center;
       margin-bottom: 20px;
+      text-align: center;
+    }
+
+    h2{
+        font-size: 2.5rem;
+        color: $primary-color;
+        margin-bottom: 20px;
+    }
+
+    #search-history{
+        margin-bottom: 30px;
+        li{
+            font-size: 1.2rem;
+            color: $text-color;
+            margin: 10px 0;
+        }
     }
   
     #user-info {
@@ -265,6 +280,11 @@ ul, li {
       }
     }
   
+    #clear-history{
+        margin-bottom: 30px;
+        @include button-style;
+    }
+
     #logout-link {
       display: inline-block;
       color: $button-color;

@@ -4,12 +4,16 @@ class ProfileManager {
         this.changePasswordForm = document.getElementById('change-password-form');
         this.changeNameForm = document.getElementById('change-name-form');
         this.logoutLink = document.getElementById('logout-link');
+        this.searchHistoryContainer = document.getElementById('search-history');
+        this.clearHistoryButton = document.getElementById('clear-history');
     }
 
     init() {
         this.loadUser();
         this.bindEvents();
-    }
+        this.displaySearchHistory(); 
+        this.clearHistoryButton.addEventListener('click', this.clearSearchHistory.bind(this));
+      }
 
     loadUser() {
         const userData = this.getCookie('user');
@@ -126,6 +130,29 @@ class ProfileManager {
         alert('Вы вышли из аккаунта');
         window.location = './index.html';
     }
+
+    displaySearchHistory() {
+        const history = JSON.parse(localStorage.getItem('searchHistory')) || [];
+        this.searchHistoryContainer.innerHTML = '';
+        if (history.length === 0) {
+          const message = document.createElement('li');
+          message.textContent = 'История поиска пуста';
+          this.searchHistoryContainer.appendChild(message);
+          return;
+        }
+      
+        history.forEach(item => {
+          const listItem = document.createElement('li');
+          listItem.textContent = `Маршрут: ${item.name} (id: ${item.id}), Посещён: ${new Date(item.timestamp).toLocaleString()}`;
+          this.searchHistoryContainer.appendChild(listItem);
+        });
+      }
+
+      clearSearchHistory() {
+        localStorage.removeItem('searchHistory');
+        this.displaySearchHistory();
+        alert('История поиска очищена');
+      }
 }
 
 document.addEventListener('DOMContentLoaded', () => {

@@ -194,6 +194,37 @@ function openDetailsWindow(itemId) {
   event.preventDefault(); 
   history.pushState({ id: itemId }, '', `./route/${itemId}`); 
   showDetails(itemId); 
+
+  saveToHistory(itemId);
+}
+
+async function saveToHistory(itemId) {
+  // Получаем текущую историю из localStorage
+  let history = JSON.parse(localStorage.getItem('searchHistory')) || [];
+
+  // Проверяем, есть ли уже такой маршрут в истории
+  const existingItem = history.find(item => item.id === itemId);
+
+  // Получаем данные маршрута (название) с сервера
+  const attractions = await fetchAttractions();
+  const attraction = attractions.find(a => a.id === itemId);
+
+  if (!attraction) {
+    console.error('Маршрут не найден');
+    return;
+  }
+
+  if (existingItem) {
+    existingItem.timestamp = new Date().toISOString();
+  } else {
+    history.push({
+      id: itemId,
+      name: attraction.name, 
+      timestamp: new Date().toISOString()
+    });
+  }
+
+  localStorage.setItem('searchHistory', JSON.stringify(history));
 }
 
 window.addEventListener('popstate', (event) => {

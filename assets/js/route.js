@@ -10,6 +10,11 @@ const filterBlock = document.getElementById('filters');
 const detailsContainer = document.getElementById('details');
 const gallery = document.getElementById('gallery');
 const galleryImage = document.getElementById('galleryImage');
+const sortByCategoryBtn = document.getElementById('sortByCategory');
+const sortByRatingBtn = document.getElementById('sortByRating');
+const filterByDistrictSelect = document.getElementById('filterByDistrict');
+const filterByTypeSelect = document.getElementById('filterByType')
+
 
 let allData = [];
 let currentPage = 1;
@@ -26,10 +31,12 @@ loader.innerHTML = "<img src='./img/25.gif' alt='loader'></img>";
 dataContainer.appendChild(loader);
 
 function fetchData(page, sortBy = '', order = '', filterByDistrict = '', filterByType = '', searchTerm = '') {
+  // Показываем лоадер
   if (!dataContainer.contains(loader)) {
     dataContainer.appendChild(loader);
   }
 
+  // Скрываем элементы интерфейса
   searchInput.style.display = 'none';
   dropDown.style.display = 'none';
   header.style.display = 'none';
@@ -38,8 +45,8 @@ function fetchData(page, sortBy = '', order = '', filterByDistrict = '', filterB
   paginationContainer.style.display = 'none';
   reviewForm.style.display = 'none';
   reviewsContainer.style.display = 'none';
-  document.getElementById('checkbox').style.display = 'none';
 
+  // Формируем URL с параметрами
   const urlParams = new URLSearchParams();
   urlParams.append('page', page);
   urlParams.append('limit', itemsPerPage);
@@ -59,9 +66,11 @@ function fetchData(page, sortBy = '', order = '', filterByDistrict = '', filterB
 
   const url = `https://672b170d976a834dd0258e17.mockapi.io/api/v1/tourism?${urlParams.toString()}`;
 
+  // Запрос к API
   fetch(url)
     .then(response => response.json())
     .then(data => {
+      // Показываем элементы интерфейса
       dataContainer.style.display = 'block';
       searchInput.style.display = 'block';
       dropDown.style.display = 'block';
@@ -69,7 +78,6 @@ function fetchData(page, sortBy = '', order = '', filterByDistrict = '', filterB
       footer.style.display = 'block';
       filterBlock.style.display = 'block';
       paginationContainer.style.display = 'flex';
-      document.getElementById('checkbox').style.display = 'block';
       reviewForm.style.display = 'flex';
       reviewsContainer.style.display = 'block';
 
@@ -86,7 +94,7 @@ function fetchData(page, sortBy = '', order = '', filterByDistrict = '', filterB
         }, 10);
       } else {
         currentPage = currentPage - 1;
-        fetchData(currentPage, sortBy, order, filterByDistrict, filterByType);
+        fetchData(currentPage, sortBy, order, filterByDistrict, filterByType, searchTerm);
       }
     })
     .catch(error => {
@@ -161,32 +169,47 @@ searchInput.addEventListener('blur', () => {
   fetchData(currentPage, sortBy, order, filterByDistrict, filterByType, searchTerm);
 });
 
-function checkFluency() {
-  const checkBox_msg = document.getElementById('checkbox');
-  if (checkBox_msg.checked) {
-    alert("Вы включили поиск по описанию");
-  } else {
-    alert("Вы отключили поиск по описанию");
-  }
-}
-
 function myFunction() {
   document.getElementById("myDropdown").classList.toggle("show");
 } 
 
-const sortByCategoryBtn = document.getElementById('sortByCategory');
+searchInput.addEventListener('keydown', (event) => {
+  if (event.key === 'Enter') {
+    const searchTerm = searchInput.value.toLowerCase();
+    currentPage = 1; 
+    fetchData(currentPage, sortBy, order, filterByDistrict, filterByType, searchTerm);
+  }
+});
+
+searchInput.addEventListener('blur', () => {
+  const searchTerm = searchInput.value.toLowerCase();
+  currentPage = 1; 
+  fetchData(currentPage, sortBy, order, filterByDistrict, filterByType, searchTerm);
+});
+
 sortByCategoryBtn.addEventListener('click', () => {
   sortBy = 'category';
   order = 'asc';
-  currentPage = 1;
+  currentPage = 1; 
   fetchData(currentPage, sortBy, order, filterByDistrict, filterByType);
 });
 
-const sortByRatingBtn = document.getElementById('sortByRating');
 sortByRatingBtn.addEventListener('click', () => {
   sortBy = 'rating';
   order = 'desc';
-  currentPage = 1;
+  currentPage = 1; 
+  fetchData(currentPage, sortBy, order, filterByDistrict, filterByType);
+});
+
+filterByDistrictSelect.addEventListener('change', () => {
+  filterByDistrict = filterByDistrictSelect.value;
+  currentPage = 1; 
+  fetchData(currentPage, sortBy, order, filterByDistrict, filterByType);
+});
+
+filterByTypeSelect.addEventListener('change', () => {
+  filterByType = filterByTypeSelect.value;
+  currentPage = 1; 
   fetchData(currentPage, sortBy, order, filterByDistrict, filterByType);
 });
 
@@ -287,7 +310,6 @@ async function showDetails(attractionId) {
     if (attraction) {
       searchInput.style.display = 'none';
       dropDown.style.display = 'none';
-      document.getElementById('checkbox').style.display = 'none';
       paginationContainer.style.display = 'none';
       filterBlock.style.display = 'none';
       dataContainer.style.display = 'none';
@@ -346,46 +368,6 @@ class BurgerMenu {
 }
 
 const burgerMenu = new BurgerMenu('burger', '.header__wrapper', '.route__input-wrapper');
-
-class DataFilter {
-  constructor(filterByDistrictSelect, filterByTypeSelect) {
-    this.filterByDistrictSelect = filterByDistrictSelect;
-    this.filterByTypeSelect = filterByTypeSelect;
-    this.filterByDistrict = '';
-    this.filterByType = '';
-    this.currentPage = 1;
-    this.sortBy = '';
-    this.order = '';
-
-    this.initEventListeners();
-  }
-
-  initEventListeners() {
-    this.filterByDistrictSelect.addEventListener('change', () => this.handleDistrictChange());
-    this.filterByTypeSelect.addEventListener('change', () => this.handleTypeChange());
-  }
-
-  handleDistrictChange() {
-    this.filterByDistrict = this.filterByDistrictSelect.value;
-    this.currentPage = 1;
-    this.fetchData();
-  }
-
-  handleTypeChange() {
-    this.filterByType = this.filterByTypeSelect.value;
-    this.currentPage = 1;
-    this.fetchData();
-  }
-
-  fetchData() {
-    fetchData(this.currentPage, this.sortBy, this.order, this.filterByDistrict, this.filterByType);
-  }
-}
-
-const filterByDistrictSelect = document.getElementById('filterByDistrict');
-const filterByTypeSelect = document.getElementById('filterByType');
-
-const dataFilter = new DataFilter(filterByDistrictSelect, filterByTypeSelect);
 
 
 

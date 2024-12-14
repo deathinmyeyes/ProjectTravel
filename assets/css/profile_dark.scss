@@ -8,7 +8,7 @@ $text_color: #E0E0E0;
 $border-color: #3D3D3D;
 $dark_card_bg: #1E1E1E; 
 $dark_hover: #2A2A2A; 
-$button-hover-color: #fff;
+$button-hover-color: #d99114;
 
 * {
     margin: 0;
@@ -42,7 +42,7 @@ $button-hover-color: #fff;
     transition: background-color 0.3s ease;
   
     &:hover {
-      background-color: #fff;
+      background-color: $button-hover-color;
     }
   }
 

@@ -209,7 +209,7 @@ ul, li {
   transition: background-color 0.3s ease;
 }
 .profile #change-name-form button:hover {
-  background-color: #fff;
+  background-color: #d99114;
 }
 .profile #change-password-form {
   margin-bottom: 30px;
@@ -251,7 +251,7 @@ ul, li {
   transition: background-color 0.3s ease;
 }
 .profile #change-password-form button:hover {
-  background-color: #fff;
+  background-color: #d99114;
 }
 .profile #clear-history {
   margin-bottom: 30px;
@@ -264,7 +264,7 @@ ul, li {
   transition: background-color 0.3s ease;
 }
 .profile #clear-history:hover {
-  background-color: #fff;
+  background-color: #d99114;
 }
 .profile #logout-link {
   display: inline-block;
@@ -274,7 +274,7 @@ ul, li {
   transition: color 0.3s ease;
 }
 .profile #logout-link:hover {
-  color: #fff;
+  color: #d99114;
 }
 
 .footer {

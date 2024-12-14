@@ -31,12 +31,10 @@ loader.innerHTML = "<img src='./img/25.gif' alt='loader'></img>";
 dataContainer.appendChild(loader);
 
 function fetchData(page, sortBy = '', order = '', filterByDistrict = '', filterByType = '', searchTerm = '') {
-  // Показываем лоадер
   if (!dataContainer.contains(loader)) {
     dataContainer.appendChild(loader);
   }
 
-  // Скрываем элементы интерфейса
   searchInput.style.display = 'none';
   dropDown.style.display = 'none';
   header.style.display = 'none';
@@ -46,7 +44,6 @@ function fetchData(page, sortBy = '', order = '', filterByDistrict = '', filterB
   reviewForm.style.display = 'none';
   reviewsContainer.style.display = 'none';
 
-  // Формируем URL с параметрами
   const urlParams = new URLSearchParams();
   urlParams.append('page', page);
   urlParams.append('limit', itemsPerPage);
@@ -66,11 +63,9 @@ function fetchData(page, sortBy = '', order = '', filterByDistrict = '', filterB
 
   const url = `https://672b170d976a834dd0258e17.mockapi.io/api/v1/tourism?${urlParams.toString()}`;
 
-  // Запрос к API
   fetch(url)
     .then(response => response.json())
     .then(data => {
-      // Показываем элементы интерфейса
       dataContainer.style.display = 'block';
       searchInput.style.display = 'block';
       dropDown.style.display = 'block';

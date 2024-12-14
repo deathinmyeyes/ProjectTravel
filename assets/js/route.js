@@ -64,7 +64,6 @@ function fetchData(page, sortBy = '', order = '', filterByDistrict = '', filterB
   fetch(url)
     .then(response => response.json())
     .then(data => {
-      // Показываем элементы интерфейса
       dataContainer.style.display = 'block';
       searchInput.style.display = 'block';
       dropDown.style.display = 'block';
@@ -258,11 +257,15 @@ async function showDetails(attractionId) {
       const routesLink = document.getElementById('routes');
       const contactsLink = document.getElementById('contacts');
       const loginLink = document.getElementById('login');
+    const profileLink = document.getElementById('profile-link');
+
 
       if (indexLink) indexLink.setAttribute('href', '../index.html');
       if (routesLink) routesLink.setAttribute('href', '../routes.html');
       if (contactsLink) contactsLink.setAttribute('href', '../contacts.html');
       if (loginLink) loginLink.setAttribute('href', '../login.html');
+      if (profileLink) profileLink.setAttribute('href', '../profile.html');
+
 
       detailsContainer.innerHTML = `
         <h2>${attraction.name}</h2>
@@ -306,11 +309,13 @@ window.addEventListener('popstate', (event) => {
     const routesLink = document.getElementById('routes');
     const contactsLink = document.getElementById('contacts');
     const loginLink = document.getElementById('login');
+    const profileLink = document.getElementById('profile-link');
 
     if (indexLink) indexLink.setAttribute('href', './index.html');
     if (routesLink) routesLink.setAttribute('href', './routes.html');
     if (contactsLink) contactsLink.setAttribute('href', './contacts.html');
     if (loginLink) loginLink.setAttribute('href', './login.html');
+    if (profileLink) profileLink.setAttribute('href', './profile.html');
   }
 });
 

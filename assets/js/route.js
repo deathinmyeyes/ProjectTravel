@@ -192,20 +192,39 @@ sortByRatingBtn.addEventListener('click', () => {
 
 function openDetailsWindow(itemId) {
   event.preventDefault(); 
-  history.pushState({ id: itemId }, '', `./route/${itemId}`); 
+  history.pushState({ id: itemId }, '', `./#route/${itemId}`); 
   showDetails(itemId); 
 
   saveToHistory(itemId);
 }
 
+window.addEventListener('popstate', (event) => {
+  if (event.state && event.state.id) {
+    showDetails(event.state.id); 
+  } else {
+    fetchData(currentPage);
+  }
+});
+
+window.onload = async () => {
+  const path = window.location.pathname; 
+  const parts = path.split('/'); 
+
+  if (parts[1] === 'route' && parts[2]) {
+    const routeId = parseInt(parts[2], 10); 
+    if (!isNaN(routeId)) {
+      showDetails(routeId); 
+    } else {
+      alert('Неверный идентификатор маршрута');
+    }
+  } else {
+    fetchData(currentPage);
+  }
+};
+
 async function saveToHistory(itemId) {
-  // Получаем текущую историю из localStorage
   let history = JSON.parse(localStorage.getItem('searchHistory')) || [];
-
-  // Проверяем, есть ли уже такой маршрут в истории
   const existingItem = history.find(item => item.id === itemId);
-
-  // Получаем данные маршрута (название) с сервера
   const attractions = await fetchAttractions();
   const attraction = attractions.find(a => a.id === itemId);
 
@@ -227,13 +246,6 @@ async function saveToHistory(itemId) {
   localStorage.setItem('searchHistory', JSON.stringify(history));
 }
 
-window.addEventListener('popstate', (event) => {
-  if (event.state && event.state.id) {
-    showDetails(event.state.id); 
-  } else {
-    fetchData(currentPage);
-  }
-});
 
 async function fetchAttractions() {
   const response = await fetch('https://672b170d976a834dd0258e17.mockapi.io/api/v1/tourism');
@@ -269,7 +281,7 @@ function nextImage() {
 
 async function showDetails(attractionId) {
   try {
-    const attractions = await fetchAttractions();
+    const attractions = await fetchAttractions(); 
     const attraction = attractions.find(a => a.id === attractionId);
 
     if (attraction) {
@@ -281,20 +293,6 @@ async function showDetails(attractionId) {
       dataContainer.style.display = 'none';
       document.getElementById('change_theme').style.display = 'none';
       detailsContainer.style.display = 'block';
-
-      const indexLink = document.getElementById('index');
-      const routesLink = document.getElementById('routes');
-      const contactsLink = document.getElementById('contacts');
-      const loginLink = document.getElementById('login');
-    const profileLink = document.getElementById('profile-link');
-
-
-      if (indexLink) indexLink.setAttribute('href', '../index.html');
-      if (routesLink) routesLink.setAttribute('href', '../routes.html');
-      if (contactsLink) contactsLink.setAttribute('href', '../contacts.html');
-      if (loginLink) loginLink.setAttribute('href', '../login.html');
-      if (profileLink) profileLink.setAttribute('href', '../profile.html');
-
 
       detailsContainer.innerHTML = `
         <h2>${attraction.name}</h2>
@@ -318,51 +316,6 @@ async function showDetails(attractionId) {
     alert('Произошла ошибка при загрузке данных');
   }
 }
-
-window.addEventListener('popstate', (event) => {
-  if (event.state && event.state.id) {
-    showDetails(event.state.id);
-  } else {
-    fetchData(currentPage);
-
-    searchInput.style.display = 'block';
-    dropDown.style.display = 'block';
-    document.getElementById('checkbox').style.display = 'block';
-    paginationContainer.style.display = 'flex';
-    filterBlock.style.display = 'block';
-    dataContainer.style.display = 'block';
-    document.getElementById('change_theme').style.display = 'block';
-    detailsContainer.style.display = 'none';
-
-    const indexLink = document.getElementById('index');
-    const routesLink = document.getElementById('routes');
-    const contactsLink = document.getElementById('contacts');
-    const loginLink = document.getElementById('login');
-    const profileLink = document.getElementById('profile-link');
-
-    if (indexLink) indexLink.setAttribute('href', './index.html');
-    if (routesLink) routesLink.setAttribute('href', './routes.html');
-    if (contactsLink) contactsLink.setAttribute('href', './contacts.html');
-    if (loginLink) loginLink.setAttribute('href', './login.html');
-    if (profileLink) profileLink.setAttribute('href', './profile.html');
-  }
-});
-
-window.onload = async () => {
-  const path = window.location.pathname; 
-  const parts = path.split('/'); 
-
-  if (parts[1] === 'route' && parts[2]) {
-    const routeId = parseInt(parts[2], 10); 
-    if (!isNaN(routeId)) {
-      showDetails(routeId); 
-    } else {
-      alert('Неверный идентификатор маршрута');
-    }
-  } else {
-    fetchData(currentPage);
-  }
-};
 
 class BurgerMenu {
   constructor(burgerId, wrapperClass, inputWrapperClass) {

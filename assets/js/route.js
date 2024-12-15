@@ -7,31 +7,71 @@ class DataManager {
     this.order = '';
     this.filterByDistrict = '';
     this.filterByType = '';
+    this.searchTerm = '';
+  }
+
+  saveParams(sortBy, order, filterByDistrict, filterByType, searchTerm) {
+    this.sortBy = sortBy;
+    this.order = order;
+    this.filterByDistrict = filterByDistrict;
+    this.filterByType = filterByType;
+    this.searchTerm = searchTerm;
+  }
+
+  getParams() {
+    return {
+      sortBy: this.sortBy,
+      order: this.order,
+      filterByDistrict: this.filterByDistrict,
+      filterByType: this.filterByType,
+      searchTerm: this.searchTerm
+    };
   }
 
   async fetchData(page, sortBy = '', order = '', filterByDistrict = '', filterByType = '', searchTerm = '', isPagination = false) {
+    const isValidCombination = await this.checkCombination(filterByDistrict, filterByType);
+    if (!isValidCombination) {
+      console.log('Комбинация district и type не существует');
+      UI.displayData([]); 
+      return;
+    }
+  
+    if (!isPagination) {
+      this.saveParams(sortBy, order, filterByDistrict, filterByType, searchTerm);
+    }
+  
+    const {
+      sortBy: currentSortBy,
+      order: currentOrder,
+      filterByDistrict: currentFilterByDistrict,
+      filterByType: currentFilterByType,
+      searchTerm: currentSearchTerm
+    } = this.getParams();
+  
     const urlParams = new URLSearchParams();
     urlParams.append('page', page);
     urlParams.append('limit', this.itemsPerPage);
   
-    if (sortBy && order) {
-      urlParams.append('sortBy', sortBy);
-      urlParams.append('order', order);
+    if (currentSortBy && currentOrder) {
+      urlParams.append('sortBy', currentSortBy);
+      urlParams.append('order', currentOrder);
     }
-    if (filterByDistrict) {
-      urlParams.append('district', encodeURIComponent(filterByDistrict));
+  
+    if (currentFilterByDistrict) {
+      urlParams.append('district', currentFilterByDistrict);
     }
-    if (filterByType) {
-      urlParams.append('type', encodeURIComponent(filterByType));
+    if (currentFilterByType) {
+      urlParams.append('type', currentFilterByType);
     }
-    if (searchTerm) {
-      urlParams.append('search', encodeURIComponent(searchTerm));
+  
+    if (currentSearchTerm) {
+      urlParams.append('search', currentSearchTerm);
     }
   
     const url = `https://672b170d976a834dd0258e17.mockapi.io/api/v1/tourism?${urlParams.toString()}`;
   
     try {
-      console.log('URL:', url); 
+      console.log('Запрос к API:', url);
   
       UI.showLoader();
       UI.hideData();
@@ -44,28 +84,43 @@ class DataManager {
   
       const data = await response.json();
   
-      console.log('Данные:', data); 
+      console.log('Данные:', data);
   
       UI.showData();
       UI.hideLoader();
   
       if (data.length > 0) {
         this.allData = data;
-        UI.displayData(this.allData); 
+        UI.displayData(this.allData);
   
         if (isPagination) {
           UI.scrollToPagination();
         }
       } else {
         this.currentPage--;
-        await this.fetchData(this.currentPage, sortBy, order, filterByDistrict, filterByType, searchTerm, isPagination);
+        await this.fetchData(this.currentPage, currentSortBy, currentOrder, currentFilterByDistrict, currentFilterByType, currentSearchTerm, isPagination);
       }
-      return data; 
+      return data;
     } catch (error) {
       console.error('Ошибка загрузки данных', error);
-      UI.showData(); 
-      UI.hideLoader(); 
-      return []; 
+      UI.showData();
+      UI.hideLoader();
+      return [];
+    }
+  }
+
+  async checkCombination(district, type) {
+    const url = `https://672b170d976a834dd0258e17.mockapi.io/api/v1/tourism?district=${encodeURIComponent(district)}&type=${encodeURIComponent(type)}`;
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        return false;
+      }
+      const data = await response.json();
+      return data.length > 0;
+    } catch (error) {
+      console.error('Ошибка проверки комбинации:', error);
+      return false;
     }
   }
 
@@ -75,9 +130,27 @@ class DataManager {
     urlParams.append('page', nextPage);
     urlParams.append('limit', this.itemsPerPage);
 
+    const { sortBy, order, filterByDistrict, filterByType, searchTerm } = this.getParams();
+
+    if (sortBy && order) {
+      urlParams.append('sortBy', sortBy);
+      urlParams.append('order', order);
+    }
+    if (filterByDistrict) {
+      urlParams.append('district', filterByDistrict);
+    }
+    if (filterByType) {
+      urlParams.append('type', filterByType);
+    }
+    if (searchTerm) {
+      urlParams.append('search', searchTerm);
+    }
+
     const url = `https://672b170d976a834dd0258e17.mockapi.io/api/v1/tourism?${urlParams.toString()}`;
 
     try {
+      console.log('Проверка следующей страницы. URL:', url);
+
       const response = await fetch(url);
       if (!response.ok) {
         throw new Error(`Ошибка проверки следующей страницы: ${response.status} ${response.statusText}`);
@@ -86,7 +159,7 @@ class DataManager {
       return data.length > 0;
     } catch (error) {
       console.error('Ошибка проверки следующей страницы', error);
-      return false; 
+      return false;
     }
   }
 }
@@ -116,35 +189,70 @@ class UI {
     this.searchInput.addEventListener('keydown', (event) => {
       if (event.key === 'Enter') {
         const searchTerm = this.searchInput.value.toLowerCase();
-        dataManager.currentPage = 1;
-        dataManager.fetchData(dataManager.currentPage, dataManager.sortBy, dataManager.order, dataManager.filterByDistrict, dataManager.filterByType, searchTerm);
+        dataManager.currentPage = 1; 
+        dataManager.fetchData(
+          dataManager.currentPage,
+          dataManager.sortBy,
+          dataManager.order,
+          dataManager.filterByDistrict,
+          dataManager.filterByType,
+          searchTerm
+        );
       }
     });
-
+    
     this.sortByCategoryBtn.addEventListener('click', () => {
       dataManager.sortBy = 'category';
       dataManager.order = 'asc';
-      dataManager.currentPage = 1;
-      dataManager.fetchData(dataManager.currentPage, dataManager.sortBy, dataManager.order, dataManager.filterByDistrict, dataManager.filterByType);
+      dataManager.currentPage = 1; 
+      dataManager.fetchData(
+        dataManager.currentPage,
+        dataManager.sortBy,
+        dataManager.order,
+        dataManager.filterByDistrict,
+        dataManager.filterByType,
+        dataManager.searchTerm
+      );
     });
-
+    
     this.sortByRatingBtn.addEventListener('click', () => {
       dataManager.sortBy = 'rating';
       dataManager.order = 'desc';
-      dataManager.currentPage = 1;
-      dataManager.fetchData(dataManager.currentPage, dataManager.sortBy, dataManager.order, dataManager.filterByDistrict, dataManager.filterByType);
+      dataManager.currentPage = 1; 
+      dataManager.fetchData(
+        dataManager.currentPage,
+        dataManager.sortBy,
+        dataManager.order,
+        dataManager.filterByDistrict,
+        dataManager.filterByType,
+        dataManager.searchTerm
+      );
     });
-
+    
     this.filterByDistrictSelect.addEventListener('change', () => {
       dataManager.filterByDistrict = this.filterByDistrictSelect.value;
-      dataManager.currentPage = 1;
-      dataManager.fetchData(dataManager.currentPage, dataManager.sortBy, dataManager.order, dataManager.filterByDistrict, dataManager.filterByType);
+      dataManager.currentPage = 1; 
+      dataManager.fetchData(
+        dataManager.currentPage,
+        dataManager.sortBy,
+        dataManager.order,
+        dataManager.filterByDistrict,
+        dataManager.filterByType,
+        dataManager.searchTerm
+      );
     });
-
+    
     this.filterByTypeSelect.addEventListener('change', () => {
       dataManager.filterByType = this.filterByTypeSelect.value;
       dataManager.currentPage = 1;
-      dataManager.fetchData(dataManager.currentPage, dataManager.sortBy, dataManager.order, dataManager.filterByDistrict, dataManager.filterByType);
+      dataManager.fetchData(
+        dataManager.currentPage,
+        dataManager.sortBy,
+        dataManager.order,
+        dataManager.filterByDistrict,
+        dataManager.filterByType,
+        dataManager.searchTerm
+      );
     });
   }
 
@@ -208,32 +316,32 @@ class Pagination {
   static async updatePagination(hasItems) {
     const paginationContainer = document.getElementById('pagination');
     paginationContainer.innerHTML = '';
-
+  
     if (dataManager.currentPage > 1) {
       const prevPageButton = document.createElement('button');
       prevPageButton.className = 'route__pagination-pBtn';
       prevPageButton.textContent = '<';
       prevPageButton.addEventListener('click', () => {
         dataManager.currentPage--;
-        dataManager.fetchData(dataManager.currentPage, dataManager.sortBy, dataManager.order, dataManager.filterByDistrict, dataManager.filterByType, '', true); 
+        dataManager.fetchData(dataManager.currentPage, dataManager.sortBy, dataManager.order, dataManager.filterByDistrict, dataManager.filterByType, dataManager.searchTerm, true);
       });
       paginationContainer.appendChild(prevPageButton);
     }
-
+  
     const paginationCount = document.createElement('p');
     paginationCount.textContent = `${dataManager.currentPage}`;
     paginationCount.style.fontSize = '20px';
     paginationContainer.appendChild(paginationCount);
-
+  
     const hasNextPage = await dataManager.checkNextPage();
-
+  
     if (hasItems && hasNextPage) {
       const nextPageButton = document.createElement('button');
       nextPageButton.className = 'route__pagination-nBtn';
       nextPageButton.textContent = '>';
       nextPageButton.addEventListener('click', () => {
         dataManager.currentPage++;
-        dataManager.fetchData(dataManager.currentPage, dataManager.sortBy, dataManager.order, dataManager.filterByDistrict, dataManager.filterByType, '', true); 
+        dataManager.fetchData(dataManager.currentPage, dataManager.sortBy, dataManager.order, dataManager.filterByDistrict, dataManager.filterByType, dataManager.searchTerm, true);
       });
       paginationContainer.appendChild(nextPageButton);
     }
@@ -245,7 +353,14 @@ class Pagination {
 class Details {
   static async showDetails(attractionId) {
     try {
-      const attractions = await dataManager.fetchData(1); 
+      const attractions = await dataManager.fetchData(
+        dataManager.currentPage,
+        dataManager.sortBy,
+        dataManager.order,
+        dataManager.filterByDistrict,
+        dataManager.filterByType,
+        UI.searchInput.value 
+      ); 
       const attraction = attractions.find(a => a.id === attractionId);
   
       if (attraction) {
@@ -294,17 +409,19 @@ class Details {
 
   static saveToSearchHistory(attraction) {
     const searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
-    const existingItem = searchHistory.find(item => item.id === attraction.id);
-
-    if (!existingItem) {
+    const existingItemIndex = searchHistory.findIndex(item => item.id === attraction.id);
+  
+    if (existingItemIndex !== -1) {
+      searchHistory[existingItemIndex].timestamp = new Date().toISOString();
+    } else {
       searchHistory.push({
         id: attraction.id,
         name: attraction.name,
         timestamp: new Date().toISOString()
       });
-
-      localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
     }
+  
+    localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
   }
 }
 
@@ -359,10 +476,10 @@ window.addEventListener('popstate', async (event) => {
   } else {
     UI.searchInput.style.display = 'block';
     UI.dropDown.style.display = 'block';
-    UI.paginationContainer.style.display = 'block';
-    UI.filterBlock.style.display = 'block';
+    UI.paginationContainer.style.display = 'flex';
+    UI.filterBlock.style.display = 'flex';
     UI.dataContainer.style.display = 'block';
-    UI.detailsContainer.style.display = 'none';
+    UI.detailsContainer.style.display = 'none'
   }
 });
 

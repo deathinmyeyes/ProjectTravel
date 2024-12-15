@@ -35,7 +35,29 @@ class RegistrationForm {
     if (error !== '') {
       alert(error);
     } else {
-      this.sendDataToServer({ email, name, password });
+      this.checkEmailExists(email).then((exists) => {
+        if (exists) {
+          alert('Этот email уже зарегистрирован');
+        } else {
+          this.sendDataToServer({ email, name, password });
+        }
+      });
+    }
+  }
+
+  async checkEmailExists(email) {
+    try {
+      const response = await fetch(`https://6752c922f3754fcea7b99892.mockapi.io/users?email=${email}`);
+      if (response.ok) {
+        const users = await response.json();
+        return users.length > 0;
+      } else {
+        console.error('Ошибка при проверке email');
+        return false;
+      }
+    } catch (error) {
+      console.error('Ошибка:', error);
+      return false;
     }
   }
 

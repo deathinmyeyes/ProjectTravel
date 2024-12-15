@@ -13,7 +13,7 @@ class ProfileManager {
         this.bindEvents();
         this.displaySearchHistory(); 
         this.clearHistoryButton.addEventListener('click', this.clearSearchHistory.bind(this));
-      }
+    }
 
     loadUser() {
         const userData = this.getCookie('user');
@@ -58,6 +58,11 @@ class ProfileManager {
 
         if (newPassword !== confirmNewPassword) {
             alert('Пароли не совпадают');
+            return;
+        }
+
+        if (newPassword.length() < 8 || confirmNewPassword.length() < 8) {
+            alert('Слишком короткий пароль');
             return;
         }
 
@@ -147,13 +152,31 @@ class ProfileManager {
           listItem.textContent = `Маршрут: ${item.name} (id: ${item.id}), Посещён: ${new Date(item.timestamp).toLocaleString()}`;
           this.searchHistoryContainer.appendChild(listItem);
         });
-      }
-    
-      clearSearchHistory() {
+    }
+
+    updateSearchHistory(item) {
+        const history = JSON.parse(localStorage.getItem('searchHistory')) || [];
+        const existingItemIndex = history.findIndex(h => h.id === item.id);
+
+        if (existingItemIndex !== -1) {
+            history[existingItemIndex].timestamp = new Date().toISOString();
+        } else {
+            history.push({
+                id: item.id,
+                name: item.name,
+                timestamp: new Date().toISOString()
+            });
+        }
+
+        localStorage.setItem('searchHistory', JSON.stringify(history));
+        this.displaySearchHistory();
+    }
+
+    clearSearchHistory() {
         localStorage.removeItem('searchHistory');
         this.displaySearchHistory();
         alert('История поиска очищена');
-      }
+    }
 }
 
 document.addEventListener('DOMContentLoaded', () => {

@@ -426,8 +426,37 @@ class ReviewManager {
     }
 
     async init() {
-        await this.fetchAllReviews();
-        this.setupEventListeners();
+      await this.fetchAllReviews();
+      this.setupEventListeners();
+  
+      const userManager = new UserManager();
+      if (userManager.getCookie('user')) {
+        this.showReviews();
+      } else {
+        this.hideReviews();
+      }
+
+      const user = userManager.getUserProfile();
+      if (user) {
+        this.setDefaultReviewName(user.name);
+      }
+    }
+
+    setDefaultReviewName(name) {
+      const reviewNameInput = document.getElementById('reviewName');
+      if (reviewNameInput) {
+        reviewNameInput.value = name || '';
+      }
+    }
+  
+    showReviews() {
+      this.reviewsContainer.style.display = 'block';
+      this.reviewForm.style.display = 'flex';
+    }
+  
+    hideReviews() {
+      this.reviewsContainer.style.display = 'none';
+      this.reviewForm.style.display = 'none';
     }
 
     async fetchAllReviews() {
@@ -573,6 +602,8 @@ class UserManager {
   constructor() {
     this.loginLink = document.getElementById('login-link');
     this.profileLink = document.getElementById('profile-link');
+    this.reviewsContainer = document.getElementById('reviewsContainer');
+    this.reviewForm = document.getElementById('reviewForm');
   }
 
   getCookie(name) {
@@ -581,17 +612,41 @@ class UserManager {
     if (parts.length === 2) return parts.pop().split(';').shift();
   }
 
-  checkUserStatus() {
+  getUserProfile() {
     const userCookie = this.getCookie('user');
-    const user = userCookie ? JSON.parse(userCookie) : null;
+    return userCookie ? JSON.parse(userCookie) : null;
+  }
+
+  checkUserStatus() {
+    const user = this.getUserProfile();
 
     if (user) {
       this.loginLink.style.display = 'none';
       this.profileLink.style.display = 'inline';
+      this.showReviews();
+      this.setDefaultReviewName(user.name); 
     } else {
       this.loginLink.style.display = 'inline';
       this.profileLink.style.display = 'none';
+      this.hideReviews();
     }
+  }
+
+  setDefaultReviewName(name) {
+    const reviewNameInput = document.getElementById('reviewName');
+    if (reviewNameInput) {
+      reviewNameInput.value = name || '';
+    }
+  }
+
+  showReviews() {
+    this.reviewsContainer.style.display = 'block';
+    this.reviewForm.style.display = 'block';
+  }
+
+  hideReviews() {
+    this.reviewsContainer.style.display = 'none';
+    this.reviewForm.style.display = 'none';
   }
 
   init() {

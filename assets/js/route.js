@@ -241,6 +241,8 @@ class Details {
       const attraction = attractions.find(a => a.id === attractionId);
 
       if (attraction) {
+        this.saveToSearchHistory(attraction);
+
         UI.searchInput.style.display = 'none';
         UI.dropDown.style.display = 'none';
         UI.paginationContainer.style.display = 'none';
@@ -268,6 +270,21 @@ class Details {
     } catch (error) {
       console.error('Ошибка при загрузке данных:', error);
       alert('Произошла ошибка при загрузке данных');
+    }
+  }
+
+  static saveToSearchHistory(attraction) {
+    const searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
+    const existingItem = searchHistory.find(item => item.id === attraction.id);
+
+    if (!existingItem) {
+      searchHistory.push({
+        id: attraction.id,
+        name: attraction.name,
+        timestamp: new Date().toISOString()
+      });
+
+      localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
     }
   }
 }

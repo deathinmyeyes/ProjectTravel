@@ -134,20 +134,21 @@ class ProfileManager {
     displaySearchHistory() {
         const history = JSON.parse(localStorage.getItem('searchHistory')) || [];
         this.searchHistoryContainer.innerHTML = '';
+    
         if (history.length === 0) {
           const message = document.createElement('li');
           message.textContent = 'История поиска пуста';
           this.searchHistoryContainer.appendChild(message);
           return;
         }
-      
+    
         history.forEach(item => {
           const listItem = document.createElement('li');
           listItem.textContent = `Маршрут: ${item.name} (id: ${item.id}), Посещён: ${new Date(item.timestamp).toLocaleString()}`;
           this.searchHistoryContainer.appendChild(listItem);
         });
       }
-
+    
       clearSearchHistory() {
         localStorage.removeItem('searchHistory');
         this.displaySearchHistory();

@@ -13,7 +13,7 @@ class DataManager {
     const urlParams = new URLSearchParams();
     urlParams.append('page', page);
     urlParams.append('limit', this.itemsPerPage);
-
+  
     if (sortBy && order) {
       urlParams.append('sortBy', sortBy);
       urlParams.append('order', order);
@@ -27,30 +27,32 @@ class DataManager {
     if (searchTerm) {
       urlParams.append('search', encodeURIComponent(searchTerm));
     }
-
+  
     const url = `https://672b170d976a834dd0258e17.mockapi.io/api/v1/tourism?${urlParams.toString()}`;
-
+  
     try {
       console.log('URL:', url); 
-
+  
       UI.showLoader();
       UI.hideData();
-
+  
       const response = await fetch(url);
-
+  
       if (!response.ok) {
         throw new Error(`Ошибка загрузки данных: ${response.status} ${response.statusText}`);
       }
-
+  
       const data = await response.json();
-
+  
+      console.log('Данные:', data); 
+  
       UI.showData();
       UI.hideLoader();
-
+  
       if (data.length > 0) {
         this.allData = data;
         UI.displayData(this.allData); 
-
+  
         if (isPagination) {
           UI.scrollToPagination();
         }
@@ -88,6 +90,8 @@ class DataManager {
     }
   }
 }
+
+
 
 class UI {
   static init() {
@@ -198,6 +202,8 @@ class UI {
   }
 }
 
+
+
 class Pagination {
   static async updatePagination(hasItems) {
     const paginationContainer = document.getElementById('pagination');
@@ -234,15 +240,20 @@ class Pagination {
   }
 }
 
+
+
 class Details {
   static async showDetails(attractionId) {
     try {
       const attractions = await dataManager.fetchData(1); 
       const attraction = attractions.find(a => a.id === attractionId);
-
+  
       if (attraction) {
         this.saveToSearchHistory(attraction);
-
+  
+        const newUrl = `./route/${attractionId}`;
+        window.history.pushState({ id: attractionId }, '', newUrl);
+  
         UI.searchInput.style.display = 'none';
         UI.dropDown.style.display = 'none';
         UI.paginationContainer.style.display = 'none';
@@ -250,6 +261,14 @@ class Details {
         UI.dataContainer.style.display = 'none';
         UI.detailsContainer.style.display = 'block';
 
+        document.getElementById('logo_link').setAttribute('href', '../index.html');
+        document.getElementById('index').setAttribute('href', '../index.html');
+        document.getElementById('routes').setAttribute('href', '../routes.html');
+        document.getElementById('contacts').setAttribute('href', '../contacts.html');
+        document.getElementById('profile-link').setAttribute('href', '../profile.html');
+        document.getElementById('login-link').setAttribute('href', '../login.html');
+
+  
         UI.detailsContainer.innerHTML = `
           <h2>${attraction.name}</h2>
           <div class='route__details-wrapper'>
@@ -288,6 +307,8 @@ class Details {
     }
   }
 }
+
+
 
 class Gallery {
   static currentImageIndex = 0;
@@ -330,6 +351,22 @@ document.addEventListener('DOMContentLoaded', () => {
   UI.init();
   dataManager.fetchData(dataManager.currentPage);
 });
+
+window.addEventListener('popstate', async (event) => {
+  const state = event.state;
+  if (state && state.id) {
+    await Details.showDetails(state.id);
+  } else {
+    UI.searchInput.style.display = 'block';
+    UI.dropDown.style.display = 'block';
+    UI.paginationContainer.style.display = 'block';
+    UI.filterBlock.style.display = 'block';
+    UI.dataContainer.style.display = 'block';
+    UI.detailsContainer.style.display = 'none';
+  }
+});
+
+
 
 class BurgerMenu {
   constructor(burgerId, wrapperClass, inputWrapperClass) {

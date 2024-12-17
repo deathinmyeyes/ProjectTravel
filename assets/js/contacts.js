@@ -86,7 +86,7 @@ class FormValidator {
       alert(error);
     } else {
       alert('Вы успешно отправили заявку на обратную связь');
-      window.location = '../contacts.html';
+      window.location = './contacts.html';
     }
   }
 }

@@ -223,3 +223,32 @@ class ThemeManager {
 }
 
 const themeManager = new ThemeManager('change_theme', 'style_link');
+
+class BurgerMenu {
+    constructor(burgerId, inputWrapperClass) {
+        this.burger = document.getElementById(burgerId);
+        this.inputWrapper = document.querySelector(inputWrapperClass);
+
+        if (!this.burger || !this.inputWrapper) {
+            console.error('Один или несколько элементов не найдены!');
+            return;
+        }
+
+        this.initEventListeners();
+    }
+
+    initEventListeners() {
+        this.burger.addEventListener('click', () => this.toggleMenu());
+    }
+
+    toggleMenu() {
+        this.inputWrapper.classList.toggle('active');
+        if (this.inputWrapper.classList.contains('active')) {
+            this.inputWrapper.style.marginTop = '270px';
+        } else {
+            this.inputWrapper.style.marginTop = '0px';
+        }
+    }
+}
+
+const burgerMenu = new BurgerMenu('burger', '.profile');

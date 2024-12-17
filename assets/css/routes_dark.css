@@ -89,12 +89,10 @@ ul, li {
 .header__button {
   margin-top: 20px;
   float: right;
-  display: flex;
 }
 .header__button button {
   width: 36px;
   height: 36px;
-  display: block;
   font-size: 20px;
   background-color: #121212;
   margin-right: 20px;
@@ -760,6 +758,9 @@ ul, li {
     display: flex;
     gap: 20px;
     width: 100%;
+  }
+  .route__details {
+    display: none;
   }
   .route__details h2 {
     font-size: 32px;

@@ -88,7 +88,6 @@ ul, li {
     &__button {
         margin-top: 20px;
         float: right;
-        display: flex;
 
         button{
             width: 36px;
@@ -96,7 +95,6 @@ ul, li {
             font-size: 20px;
             background-color: #fff;
             margin-right: 20px;
-            display: block;
             cursor: pointer;
             border-radius: 5px 50% 50% 5px;
             &::after{
@@ -843,6 +841,7 @@ ul, li {
         }
 
         &__details {
+            display: none;
             h2 {
                 font-size: 32px;
             }

@@ -369,4 +369,140 @@ ul, li {
 .footer__copyright-policy p:hover {
   transform: scale(1.05);
   opacity: 0.85;
+}
+
+@media (max-width: 414px) {
+  .container {
+    width: 100%;
+    padding: 0 10px;
+  }
+  .header__wrapper {
+    flex-direction: row;
+    align-items: center;
+  }
+  .header__logo {
+    scale: 0.8;
+  }
+  .header__logo h2 {
+    margin-top: 40px;
+  }
+  .header__nav, .header__button {
+    display: none;
+  }
+  .header__burger {
+    display: flex;
+  }
+  .header__wrapper.active .header__nav {
+    display: block;
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    background-color: #1E1E1E;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 100px;
+    height: 300px;
+  }
+  .header__wrapper.active .header__button {
+    display: block;
+    position: absolute;
+    top: 70px;
+    right: 50px;
+    background-color: #1E1E1E;
+    border-radius: 5px;
+  }
+  .header__wrapper.active .header__list {
+    flex-direction: column;
+    margin-top: -20px;
+    margin-right: -60px;
+  }
+  .header__wrapper.active .header__button {
+    margin-top: 10px;
+  }
+  .profile {
+    padding: 20px 0;
+  }
+  .profile .container {
+    padding: 15px;
+  }
+  .profile h1, .profile h2 {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+  }
+  .profile #search-history li {
+    font-size: 1rem;
+  }
+  .profile #user-info p,
+  .profile #change-name-form p,
+  .profile #change-password-form p {
+    font-size: 1rem;
+  }
+  .profile #change-name-form,
+  .profile #change-password-form {
+    margin-bottom: 20px;
+  }
+  .profile #change-name-form h2,
+  .profile #change-password-form h2 {
+    font-size: 1.5rem;
+  }
+  .profile #change-name-form input[type=text],
+  .profile #change-name-form input[type=password],
+  .profile #change-password-form input[type=text],
+  .profile #change-password-form input[type=password] {
+    padding: 8px;
+    font-size: 0.9rem;
+  }
+  .profile #change-name-form button,
+  .profile #change-password-form button {
+    padding: 8px 15px;
+    font-size: 0.9rem;
+  }
+  .profile #clear-history {
+    padding: 8px 15px;
+    font-size: 0.9rem;
+  }
+  .profile #logout-link {
+    font-size: 0.9rem;
+  }
+  .footer {
+    height: auto;
+    padding: 20px 0;
+  }
+  .footer__wrapper {
+    flex-direction: column;
+    gap: 20px;
+  }
+  .footer__logo {
+    margin-top: 20px;
+  }
+  .footer__logo p {
+    margin-top: 20px;
+  }
+  .footer__logo-text {
+    width: 100%;
+  }
+  .footer__navigation {
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 20px;
+  }
+  .footer__service-list p, .footer__company-list p {
+    font-size: 18px;
+  }
+  .footer__service-list li, .footer__company-list li {
+    font-size: 16px;
+  }
+  .footer__copyright {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .footer__copyright p {
+    font-size: 14px;
+  }
+  .footer__copyright-policy {
+    gap: 20px;
+  }
+  .footer__copyright-policy p {
+    font-size: 12px;
+  }
 }/*# sourceMappingURL=profile_dark.css.map */
